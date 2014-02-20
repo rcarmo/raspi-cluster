@@ -42,6 +42,8 @@ This is a partial list of the stuff I'm using (Amazon UK affiliate links):
 
 ## Software
 
+As a base OS, I'm currently using [Ryan Finnie's unofficial Ubuntu 14.04.2 image][ub], which works much better than Raspbian for my purposes (nevertheless, the configuration files in this repo should work in both systems)
+
 The cluster is now running mostly [Clojure][clj] programs using [Hazelcast][hz] atop JDK 1.8, as well as [Jupyter][jy], which runs very nicely indeed and provides me with an agnostic, notebook-oriented front-end.
 
 I have also set up [Disco][dp] (and now [Spark][spark]) on it and intend to fiddle with MPI, but so far I have plenty of ways to parallelize things.
@@ -89,3 +91,4 @@ But I'm open to [sponsoring][d] so that I can upgrade this to have at least twic
 [golang]: http://www.golang.org
 [spark]: http://spark.apache.org
 [jy]: http://jupyter.org
+[ub]: http://www.finnie.org/2015/02/16/raspberry-pi-2-update-ubuntu-14-04-image-available
