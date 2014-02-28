@@ -1,5 +1,7 @@
 # raspi-cluster
 
+![First assembly](https://raw.github.com/rcarmo/raspi-cluster/master/pics/first_assembly.jpg)
+
 ## What?
 
 A few months back, I decided I'd build a small cluster of [Raspberry Pi][rpi] boards, and this repository will be used for versioning design notes, configuration files and sundry.
