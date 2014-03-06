@@ -1,6 +1,6 @@
 # raspi-cluster
 
-![First assembly](https://raw.github.com/rcarmo/raspi-cluster/master/pics/first_assembly.jpg)
+![Cabled](https://raw.github.com/rcarmo/raspi-cluster/master/pics/ethernet.jpg)
 
 ## What?
 
@@ -12,9 +12,16 @@ I wanted something challenging to do in terms of distributed processing, and lac
 
 ## How?
 
-The cluster consists of five nodes: a master and four slaves. The master acts as a gateway, DHCP and NFS server (using Wi-Fi as an uplink, since that's more convenient for me) and the slave nodes get their IP address and `/mnt/jobs` directory from it.
+The cluster consists of five nodes: a master and four slaves. The master acts as a gateway, DHCP and NFS server (I originally considered using Wi-Fi as an uplink, since that's more convenient for me, but am now investigating an Ethernet USB adapter) and the slave nodes get their IP address and `/mnt/jobs` directory from it.
 
 All slave nodes should be identical -- _completely_ identical, except for the MAC address, and there should be _zero_ need to log in and configure things manually for each node.
+
+Here's a couple more shots of it, with the 5-port PSU and the initial assembly:
+
+![Power cords](https://raw.github.com/rcarmo/raspi-cluster/master/pics/micro_usb.jpg)
+![First assembly](https://raw.github.com/rcarmo/raspi-cluster/master/pics/first_assembly.jpg)
+
+In retrospect I probably ought to have gone for longer USB cables and moved all of the cabling to the USB side (since it leaves the SD card slot clear), but I also need to be able to see the activity lights, and the Pi isn't exactly designed for easy stacking.
 
 A larger cluster is certainly feasible, but 5 boards is as much as I can power with the PSU I have.
 
