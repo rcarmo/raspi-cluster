@@ -53,7 +53,7 @@ Besides, running things on low-end hardware is often the only way to do proper o
 * `rpi-update` to get the kernel up to 3.10.x with minimal hassle (need to sort out MPI later)
 * `dnsmasq` for DHCP and DNS service on the master to the slaves
 * [JDK 8 Early Release](https://jdk8.java.net/download.html)
-* [leiningen][lein]
+* [leiningen][lein] (which fetches [Hazelcast][hz] and other dependencies for me, via [this library][clj-hz])
 * [Nightcode][nc] as a development environment ([LightTable][lt] doesn't run on ARM, and a lot of my hobby coding these days is actually done on an [ODROID][u2])
 
 ## But isn't the [Raspberry Pi][rpi] slow?
@@ -62,6 +62,7 @@ Well spotted, young person. It is, even with the early releases of JDK 1.8. But 
 
 But I'm open to [sponsoring][d] so that I can upgrade this to be based on 4 or 5 boards like the [ODROID-U3][u3] (I have an [U2][u2] and love it).
 
+[hz]: http://www.hazelcast.org
 [rpi]: http://www.raspberrypi.org
 [d]: http://the.taoofmac.com/space/site/Donate
 [u2]: http://hardkernel.com/main/products/prdt_info.php?g_code=G135341370451
@@ -72,3 +73,4 @@ But I'm open to [sponsoring][d] so that I can upgrade this to be based on 4 or 5
 [lt]: http://lighttable.com
 [moebius]: http://moebiuslinux.sourceforge.net
 [lein]: http://leiningen.org
+[clj-hz]: https://github.com/rcarmo/clj-hazelcast
