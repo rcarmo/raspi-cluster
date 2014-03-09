@@ -12,7 +12,7 @@ I wanted something challenging to do in terms of distributed processing, and lac
 
 ## How?
 
-The cluster consists of five nodes: a master and four slaves. The master acts as a gateway, DHCP and NFS server (I originally considered using Wi-Fi as an uplink, since that's more convenient for me, but am now investigating an Ethernet USB adapter) and the slave nodes get their IP address and `/mnt/jobs` directory from it.
+The cluster consists of five nodes: a master and four slaves. The master acts as a gateway, DHCP and NFS server and the slave nodes get their IP address and `/mnt/jobs` directory from it.
 
 All slave nodes should be identical -- _completely_ identical, except for the MAC address, and there should be _zero_ need to log in and configure things manually for each node.
 
@@ -24,6 +24,19 @@ Here's a couple more shots of it, with the 5-port PSU and the initial assembly:
 In retrospect I probably ought to have gone for longer USB cables and moved all of the cabling to the USB side (since it leaves the SD card slot clear), but I also need to be able to see the activity lights, and the Pi isn't exactly designed for easy stacking.
 
 A larger cluster is certainly feasible, but 5 boards is as much as I can power with the PSU I have.
+
+## Hardware
+
+This is a partial list of the stuff I'm using, and which I'll be updating:
+
+* 5 Raspberry Pi Model B boards (duh!)
+* [TP-Link 5-port Ethernet switch](http://www.amazon.co.uk/TP-Link-TL-SF1005D-100Mbps-Unmanaged-Desktop/dp/B000FNFSPY/ref=as_li_tf_tl?ie=UTF8&tag=thtaofma-21&linkCode=as2&camp=1634&creative=6738)
+* [6 inch micro USB cables](http://www.amazon.co.uk/gp/product/B003YKX6WM/ref=as_li_tf_tl?ie=UTF8&tag=thtaofma-21&linkCode=as2&camp=1634&creative=6738)
+* [5 port USB PSU](http://www.amazon.co.uk/gp/product/B00EKDVGKQ/ref=as_li_tf_tl?ie=UTF8&tag=thtaofma-21&linkCode=as2&camp=1634&creative=6738)
+* [Ultra-cheap USB Ethernet adapter](http://www.amazon.co.uk/gp/product/B009UOG3NU/ref=as_li_tf_tl?ie=UTF8&tag=thtaofma-21&linkCode=as2&camp=1634&creative=6738) -- NOTE: the ARM driver for this panics the kernel, so I'm back using a Wi-Fi dongle.
+* An ancient Bondie Blue iMac USB keyboard.
+* Custom-printed rack mount base -- I'll eventually draft a "normal" case to hold the boards upright, but for now this does the trick.
+* Some rubber bands (seriously, how else would I manage the cabling)?
 
 ## Software
 
