@@ -22,7 +22,7 @@
 
 #define ANNOUNCEMENT_GROUP "224.0.0.251"
 #define ANNOUNCEMENT_PORT 6000
-#define ANNOUNCEMENT_TEMPLATE "{\"cpufreq\":%d,\"cputemp\":%f,\"cpuusage\":%f,\"loadavg\":%s,\"meminfo\":[%s]}"
+#define ANNOUNCEMENT_TEMPLATE "{\"cpufreq\":%d,\"cputemp\":%f,\"cpuusage\":%f,\"loadavg\":%s,\"meminfo\":{%s}}"
 #define MAX_LENGTH 1024
 
 char loadavg_buffer[MAX_LENGTH];
@@ -153,7 +153,7 @@ char *get_meminfo(void) {
                 break;
             if((!strncmp(label, "Mem", 3)) ||
                (!strncmp(label, "Swap", 4))) {
-                sprintf(buffer, "{\"%s\":%d},", label, value);
+                sprintf(buffer, "\"%s\":%d,", label, value);
                 strcat(meminfo_buffer, buffer);
             }
         }
