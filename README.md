@@ -49,10 +49,11 @@ Besides, running things on low-end hardware is often the only way to do proper o
 
 ### List of packages involved so far:
 
+* A custom daemon that sends out a JSON-formatted multicast packet with system load, CPU usage and RAM statistics (available in `tools`)
 * [Moebius Linux][moebius] as a base distro (it's essentially Raspbian without the bloat)
 * `rpi-update` to get the kernel up to 3.10.x with minimal hassle (need to sort out MPI later)
 * `dnsmasq` for DHCP and DNS service on the master to the slaves
-* [JDK 8 Early Release](https://jdk8.java.net/download.html)
+* Oracle JDK 7 (tried the [JDK 8 Early Release](https://jdk8.java.net/download.html), but was getting inconsistent results, will go back to it later)
 * [leiningen][lein] (which fetches [Hazelcast][hz] and other dependencies for me, via [this library][clj-hz])
 * [Nightcode][nc] as a development environment ([LightTable][lt] doesn't run on ARM, and a lot of my hobby coding these days is actually done on an [ODROID][u2])
 
