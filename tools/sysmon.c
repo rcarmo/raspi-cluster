@@ -92,7 +92,7 @@ char *get_loadavg(void) {
 /*
  * Get CPU usage by measuring jiffie counters
  */
-float get_cpuusage(void) {
+float get_cpuusage(int interval) {
     FILE *fp;
     char line[MAX_LENGTH];
     long stat[7]  = {0}; /* user, nice, system, idle, iowait, irq, softirq */
@@ -110,7 +110,7 @@ float get_cpuusage(void) {
     fclose(fp);
 
     /* Now give the kernel time to update them */
-    sleep(1);
+    sleep(interval);
 
     /* And resample */
     fp = fopen("/proc/stat", "r");
@@ -190,14 +190,13 @@ int main() {
     addr_len             = sizeof(addr);
 
     while (1) {
-        msg_len = sprintf(msg, ANNOUNCEMENT_TEMPLATE, get_cpufreq(), get_cputemp(), get_cpuusage(), get_loadavg(), get_meminfo());
+        msg_len = sprintf(msg, ANNOUNCEMENT_TEMPLATE, get_cpufreq(), get_cputemp(), get_cpuusage(2), get_loadavg(), get_meminfo());
         //printf("sending %d: %s\n", msg_len, msg);
         count = sendto(sock, msg, msg_len + 1, 0, (struct sockaddr *) &addr, addr_len);
         if (count < 0) {
             perror("Error sending message");
             //exit(1); we shouldn't die due to transient failures
         }
-        sleep(1); // remember that get_cpuusage() takes another second to be accurate
     }
     //muntrace();
 }
