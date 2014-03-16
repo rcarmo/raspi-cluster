@@ -139,9 +139,10 @@ float get_cpuusage(void) {
  */
 char *get_meminfo(void) {
     FILE *fp;
-    char dummy[2];
+    char unit[2];
     char label[128];
     char buffer[128];
+    char *colon;
     int  value;
    
     bzero(&meminfo_buffer, MAX_LENGTH);
@@ -149,10 +150,12 @@ char *get_meminfo(void) {
     if (fp != NULL) {
         while (!feof(fp)) {
             // fscanf is ugly, but serves us well here
-            if(fscanf(fp, "%s %d %2s", label, &value, dummy) != 3)
+            if(fscanf(fp, "%s %d %2s", label, &value, unit) != 3)
                 break;
-            if((!strncmp(label, "Mem", 3)) ||
-               (!strncmp(label, "Swap", 4))) {
+            colon = strchr(label,':');
+            if(colon != NULL)
+                *colon = '\0';
+            if(!strncmp(unit, "kB", 2)) {
                 sprintf(buffer, "\"%s\":%d,", label, value);
                 strcat(meminfo_buffer, buffer);
             }
