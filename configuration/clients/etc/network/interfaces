@@ -1,0 +1,5 @@
+auto lo
+iface lo inet loopback
+iface eth0 inet dhcp
+# launch our statistics daemon
+post-up /usr/local/bin/multicast_statusd &
