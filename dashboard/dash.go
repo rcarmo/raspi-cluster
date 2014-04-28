@@ -38,7 +38,7 @@ func do_listen(conn *net.UDPConn, es eventsource.EventSource) {
 		if err != nil {
 			log.Fatal(err)
 		}
-        fmt.Println(from.IP, string(buffer))
+		fmt.Println(from.IP, string(buffer))
 	}
 }
 
