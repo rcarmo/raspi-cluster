@@ -1,0 +1,18 @@
+.widget-image {
+  background-color: #4b4b4b;
+}
+
+.widget-image div {
+    display: -webkit-flex;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+}
+
+.widget-image > img {
+	margin: auto;
+	width: 100%;
+	height: auto;
+}

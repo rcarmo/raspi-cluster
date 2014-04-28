@@ -1,0 +1,41 @@
+{
+	"widgets": [
+		{
+			"kind"     :  "clock",
+			"id"       :  "myclock",
+            "subscribe": "tick"
+		}, 
+		{
+			"kind"     : "image", 
+			"id"       : "kitten-pic",
+            "subscribe": "kitten-photos",
+			"url"      : "http://placekitten.com/g/200/300",
+            "sizey"    : 2
+		},
+        {
+            "kind"     : "meter",
+            "id"       : "kitten-gauge",
+            "subscribe": "kitten-count",
+            "title"    : "Kittens",
+            "value"    : 73,
+            "info"     : "Freshly juiced"
+        },
+        {
+            "kind"     : "meter",
+            "id"       : "kitten-gauge2",
+            "subscribe": "kitten-count",
+            "title"    : "Moar Kittens",
+            "value"    : 73,
+            "info"     : "Freshly juiced"
+        },
+        {
+            "kind"     : "linechart",
+            "id"       : "kitten-trends",
+            "subscribe": "kitten-count",
+            "title"    : "Meowing",
+            "history"  : [0, 2, 24, 43, 54, 73],
+            "sizex"    : 2,
+            "sizey"    : 2
+        }
+	]
+}

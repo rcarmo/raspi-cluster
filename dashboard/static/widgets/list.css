@@ -1,0 +1,36 @@
+.widget-list {
+  background-color: #12b0c5;
+  vertical-align: top;
+}
+.widget-list .title {
+  color: rgba(255, 255, 255, 0.7);
+}
+.widget-list ol, .widget-list ul {
+  margin: 0 15px;
+  text-align: left;
+  color: rgba(255, 255, 255, 0.7);
+}
+.widget-list ol {
+  list-style-position: inside;
+}
+.widget-list li {
+  margin-bottom: 5px;
+}
+.widget-list .list-nostyle {
+  list-style: none;
+}
+.widget-list .label {
+  color: rgba(255, 255, 255, 0.7);
+}
+.widget-list .value {
+  float: right;
+  margin-left: 12px;
+  font-weight: 600;
+  color: #fff;
+}
+.widget-list .updated-at {
+  color: rgba(0, 0, 0, 0.3);
+}
+.widget-list .more-info {
+  color: rgba(255, 255, 255, 0.7);
+}

@@ -1,0 +1,17 @@
+.widget-linechart {
+  background-color: #dc5945;
+  position: relative;
+}
+.widget-linechart .title, .widget-linechart .value {
+  position: relative;
+  z-index: 99;
+}
+.widget-linechart .title {
+  color: rgba(255, 255, 255, 0.7);
+}
+.widget-linechart .more-info {
+  color: rgba(255, 255, 255, 0.3);
+  font-weight: 600;
+  font-size: 20px;
+  margin-top: 0;
+}
