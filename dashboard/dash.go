@@ -11,6 +11,7 @@ import (
 	"net/http"
 	"strconv"
 	"time"
+    "strings"
 	//    "bufio"
 	//    "os"
 	//    "encoding/json"
@@ -19,6 +20,7 @@ import (
 var listenPort int = 8080
 var staticPath string = "static"
 var multicastAddr string = "224.0.0.251:6000"
+var hostCache map[string]string
 
 func Source(es eventsource.EventSource) {
 	id := 1
@@ -27,6 +29,19 @@ func Source(es eventsource.EventSource) {
 		id++
 		time.Sleep(5 * time.Second)
 	}
+}
+
+func lookup(ip string) string {
+    var hostname = hostCache[ip]
+    if hostname == "" {
+        result, err := net.LookupAddr(ip)
+        if err != nil {
+			log.Fatal(err)
+        }
+        hostname = strings.Split(result[0],".")[0]
+        hostCache[ip] = hostname
+    }
+    return hostname
 }
 
 func do_listen(conn *net.UDPConn, es eventsource.EventSource) {
@@ -38,7 +53,7 @@ func do_listen(conn *net.UDPConn, es eventsource.EventSource) {
 		if err != nil {
 			log.Fatal(err)
 		}
-		fmt.Println(from.IP, string(buffer))
+        fmt.Println(lookup(from.IP.String()), string(buffer))
 	}
 }
 
@@ -53,6 +68,7 @@ func MulticastListener(es eventsource.EventSource) {
 }
 
 func main() {
+    hostCache = make(map[string]string)
 	es := eventsource.New(nil, nil)
 	defer es.Close()
 
