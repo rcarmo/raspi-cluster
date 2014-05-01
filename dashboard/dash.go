@@ -25,21 +25,21 @@ var hostCache map[string]string
 // A partial breakdown of the memory information
 
 type Metrics struct {
-    CpuFreq  float64 `json:"cpufreq"`
-    CpuTemp  float64 `json:"cputemp"`
-    CpuUsage float64 `json:"cpuusage"`
-    LoadAvg  [3]float64 `json:"loadavg"`
+	CpuFreq  float64    `json:"cpufreq"`
+	CpuTemp  float64    `json:"cputemp"`
+	CpuUsage float64    `json:"cpuusage"`
+	LoadAvg  [3]float64 `json:"loadavg"`
 	MemInfo  struct {
-        MemTotal   float64
-        MemFree    float64
-        Buffers    float64
-        Cached     float64
-        SwapCached float64
-        Active     float64
-        Inactive   float64
-        SwapTotal  float64
-        SwapFree   float64
-    } `json:"meminfo"`
+		MemTotal   float64
+		MemFree    float64
+		Buffers    float64
+		Cached     float64
+		SwapCached float64
+		Active     float64
+		Inactive   float64
+		SwapTotal  float64
+		SwapFree   float64
+	} `json:"meminfo"`
 }
 
 func Source(es eventsource.EventSource) {
@@ -74,18 +74,18 @@ func do_listen(conn *net.UDPConn, es eventsource.EventSource) {
 		if err != nil {
 			log.Fatal(err)
 		}
-        err = json.Unmarshal(buffer[:size], &m)
+		err = json.Unmarshal(buffer[:size], &m)
 		if err != nil {
 			log.Fatal(err)
 		}
-        /*
-        test, err := json.Marshal(m)
-		if err != nil {
-            log.Print("here")
-			log.Fatal(err)
-		}
-        */
-		fmt.Println(reverse_lookup(from.IP.String()),m)
+		/*
+		        test, err := json.Marshal(m)
+				if err != nil {
+		            log.Print("here")
+					log.Fatal(err)
+				}
+		*/
+		fmt.Println(reverse_lookup(from.IP.String()), m)
 	}
 }
 
