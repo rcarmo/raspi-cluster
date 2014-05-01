@@ -10,17 +10,37 @@ import (
 	"net"
 	"net/http"
 	"strconv"
+	"strings"
 	"time"
-    "strings"
 	//    "bufio"
 	//    "os"
-	//    "encoding/json"
+	"encoding/json"
 )
 
 var listenPort int = 8080
 var staticPath string = "static"
 var multicastAddr string = "224.0.0.251:6000"
 var hostCache map[string]string
+
+// A partial breakdown of the memory information
+
+type Metrics struct {
+    CpuFreq  float64 `json:"cpufreq"`
+    CpuTemp  float64 `json:"cputemp"`
+    CpuUsage float64 `json:"cpuusage"`
+    LoadAvg  [3]float64 `json:"loadavg"`
+	MemInfo  struct {
+        MemTotal   float64
+        MemFree    float64
+        Buffers    float64
+        Cached     float64
+        SwapCached float64
+        Active     float64
+        Inactive   float64
+        SwapTotal  float64
+        SwapFree   float64
+    } `json:"meminfo"`
+}
 
 func Source(es eventsource.EventSource) {
 	id := 1
@@ -31,32 +51,45 @@ func Source(es eventsource.EventSource) {
 	}
 }
 
-func lookup(ip string) string {
-    var hostname = hostCache[ip]
-    if hostname == "" {
-        result, err := net.LookupAddr(ip)
-        if err != nil {
-			log.Fatal(err)
-        }
-        hostname = strings.Split(result[0],".")[0]
-        hostCache[ip] = hostname
-    }
-    return hostname
-}
-
-func do_listen(conn *net.UDPConn, es eventsource.EventSource) {
-	// listens to UDP data and injects events after parsing them
-
-	for {
-		buffer := make([]byte, 16384)
-		_, from, err := conn.ReadFromUDP(buffer)
+// reverse lookup an IP address, caching the results
+func reverse_lookup(ip string) string {
+	var hostname = hostCache[ip]
+	if hostname == "" {
+		result, err := net.LookupAddr(ip)
 		if err != nil {
 			log.Fatal(err)
 		}
-        fmt.Println(lookup(from.IP.String()), string(buffer))
+		hostname = strings.Split(result[0], ".")[0]
+		hostCache[ip] = hostname
+	}
+	return hostname
+}
+
+// listens to UDP data and injects events after parsing them
+func do_listen(conn *net.UDPConn, es eventsource.EventSource) {
+	var m Metrics
+	buffer := make([]byte, 16384)
+	for {
+		size, from, err := conn.ReadFromUDP(buffer)
+		if err != nil {
+			log.Fatal(err)
+		}
+        err = json.Unmarshal(buffer[:size], &m)
+		if err != nil {
+			log.Fatal(err)
+		}
+        /*
+        test, err := json.Marshal(m)
+		if err != nil {
+            log.Print("here")
+			log.Fatal(err)
+		}
+        */
+		fmt.Println(reverse_lookup(from.IP.String()),m)
 	}
 }
 
+// set up the multicast listener
 func MulticastListener(es eventsource.EventSource) {
 	// now try to listen to our specific group
 	mcaddr, err := net.ResolveUDPAddr("udp", multicastAddr)
@@ -68,7 +101,7 @@ func MulticastListener(es eventsource.EventSource) {
 }
 
 func main() {
-    hostCache = make(map[string]string)
+	hostCache = make(map[string]string)
 	es := eventsource.New(nil, nil)
 	defer es.Close()
 
