@@ -64,7 +64,12 @@ func reverseLookup(ip string) string {
 	return hostname
 }
 
-func sendMetrics(host string, m Metrics, es eventsource.EventSource) {
+func parseAndSendMetrics(host string, buffer []byte, es eventsource.EventSource) {
+	var m Metrics
+	err := json.Unmarshal(buffer, &m)
+	if err != nil {
+		return
+	}
 	fmt.Println(host, m)
 	es.SendMessage(fmt.Sprintf("%f", m.CpuFreq), fmt.Sprintf("%s-%s", host, "cpufreq"), "")
 	es.SendMessage(fmt.Sprintf("%f", m.CpuTemp), fmt.Sprintf("%s-%s", host, "cputemp"), "")
@@ -72,19 +77,14 @@ func sendMetrics(host string, m Metrics, es eventsource.EventSource) {
 
 // listens to UDP data and injects events after parsing them
 func doListen(conn *net.UDPConn, es eventsource.EventSource) {
-	var m Metrics
 	buffer := make([]byte, 16384)
 	for {
 		size, from, err := conn.ReadFromUDP(buffer)
 		if err != nil {
 			log.Fatal(err)
 		}
-		err = json.Unmarshal(buffer[:size], &m)
-		if err != nil {
-			log.Fatal(err)
-		}
 		host := reverseLookup(from.IP.String())
-		go sendMetrics(host, m, es)
+		go parseAndSendMetrics(host, buffer[:size], es)
 	}
 }
 
