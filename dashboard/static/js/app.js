@@ -26,7 +26,7 @@ function Dashboard(source) {
     console.log("Started.");
 
     var templates = {}, grid,
-        source    = new EventSource('/event'),
+        source    = new EventSource('/events'),
         dashboard = new Dashboard(source);
 
     // TODO: test error conditions
@@ -72,6 +72,7 @@ function Dashboard(source) {
         var widget = window[item.kind + '_widget'](el, $.extend(item, {template: templates[item.kind]}));
         /* now create a closure that will update the widget when its subscribed event pops up */
         widget.source.addEventListener(widget.subscribe, function(e) {
+            console.log(e);
             widget.trigger("update", e);
         });
         dashboard.widgets.push(widget);
