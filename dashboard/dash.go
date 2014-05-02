@@ -22,14 +22,13 @@ var staticPath string = "static"
 var multicastAddr string = "224.0.0.251:6000"
 var hostCache map[string]string
 
-// A partial breakdown of the memory information
-
 type Metrics struct {
 	CpuFreq  float64    `json:"cpufreq"`
 	CpuTemp  float64    `json:"cputemp"`
 	CpuUsage float64    `json:"cpuusage"`
 	LoadAvg  [3]float64 `json:"loadavg"`
-	MemInfo  struct {
+	// A partial breakdown of the memory information
+	MemInfo struct {
 		MemTotal   float64
 		MemFree    float64
 		Buffers    float64
@@ -42,7 +41,7 @@ type Metrics struct {
 	} `json:"meminfo"`
 }
 
-func Source(es eventsource.EventSource) {
+func ClockSource(es eventsource.EventSource) {
 	id := 1
 	for {
 		es.SendMessage("tick", "tick-event", strconv.Itoa(id))
@@ -52,7 +51,7 @@ func Source(es eventsource.EventSource) {
 }
 
 // reverse lookup an IP address, caching the results
-func reverse_lookup(ip string) string {
+func reverseLookup(ip string) string {
 	var hostname = hostCache[ip]
 	if hostname == "" {
 		result, err := net.LookupAddr(ip)
@@ -65,8 +64,14 @@ func reverse_lookup(ip string) string {
 	return hostname
 }
 
+func sendMetrics(host string, m Metrics, es eventsource.EventSource) {
+	fmt.Println(host, m)
+	es.SendMessage(fmt.Sprintf("%f", m.CpuFreq), fmt.Sprintf("%s-%s", host, "cpufreq"), "")
+	es.SendMessage(fmt.Sprintf("%f", m.CpuTemp), fmt.Sprintf("%s-%s", host, "cputemp"), "")
+}
+
 // listens to UDP data and injects events after parsing them
-func do_listen(conn *net.UDPConn, es eventsource.EventSource) {
+func doListen(conn *net.UDPConn, es eventsource.EventSource) {
 	var m Metrics
 	buffer := make([]byte, 16384)
 	for {
@@ -78,14 +83,8 @@ func do_listen(conn *net.UDPConn, es eventsource.EventSource) {
 		if err != nil {
 			log.Fatal(err)
 		}
-		/*
-		        test, err := json.Marshal(m)
-				if err != nil {
-		            log.Print("here")
-					log.Fatal(err)
-				}
-		*/
-		fmt.Println(reverse_lookup(from.IP.String()), m)
+		host := reverseLookup(from.IP.String())
+		go sendMetrics(host, m, es)
 	}
 }
 
@@ -97,7 +96,7 @@ func MulticastListener(es eventsource.EventSource) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	go do_listen(conn, es)
+	go doListen(conn, es)
 }
 
 func main() {
@@ -105,8 +104,8 @@ func main() {
 	es := eventsource.New(nil, nil)
 	defer es.Close()
 
-	http.Handle("/event", es)
-	go Source(es)
+	http.Handle("/events", es)
+	go ClockSource(es)
 	go MulticastListener(es)
 
 	// Serve static files

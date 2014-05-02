@@ -3,37 +3,22 @@
 		{
 			"kind"     :  "clock",
 			"id"       :  "myclock",
-            "subscribe": "tick"
+            "subscribe":  "tick-event"
 		}, 
-		{
-			"kind"     : "image", 
-			"id"       : "kitten-pic",
-            "subscribe": "kitten-photos",
-			"url"      : "http://placekitten.com/g/200/300",
-            "sizey"    : 2
-		},
         {
             "kind"     : "meter",
-            "id"       : "kitten-gauge",
-            "subscribe": "kitten-count",
-            "title"    : "Kittens",
-            "value"    : 73,
-            "info"     : "Freshly juiced"
-        },
-        {
-            "kind"     : "meter",
-            "id"       : "kitten-gauge2",
-            "subscribe": "kitten-count",
-            "title"    : "Moar Kittens",
-            "value"    : 73,
-            "info"     : "Freshly juiced"
+            "id"       : "bluebox-cputemp",
+            "subscribe": "bluebox-cputemp",
+            "title"    : "bluebox",
+            "value"    : 0,
+            "info"     : "Celsius"
         },
         {
             "kind"     : "linechart",
-            "id"       : "kitten-trends",
-            "subscribe": "kitten-count",
-            "title"    : "Meowing",
-            "history"  : [0, 2, 24, 43, 54, 73],
+            "id"       : "bluebox-trends",
+            "subscribe": "bluebox-cputemp",
+            "title"    : "Temperature Chart",
+            "history"  : [0],
             "sizex"    : 2,
             "sizey"    : 2
         }
