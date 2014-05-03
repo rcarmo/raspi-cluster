@@ -1,4 +1,4 @@
 # RaspberryPI hosts configuration file
 127.0.0.1       localhost raspberrypi raspberry cluster
-10.0.0.1	cluster
+10.0.0.1        master
 
