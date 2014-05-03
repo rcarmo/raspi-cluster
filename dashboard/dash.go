@@ -17,7 +17,7 @@ import (
 	"encoding/json"
 )
 
-var listenPort int = 8080
+var listenPort int = 8888 
 var staticPath string = "static"
 var multicastAddr string = "224.0.0.251:6000"
 var hostCache map[string]string
@@ -68,11 +68,13 @@ func parseAndSendMetrics(host string, buffer []byte, es eventsource.EventSource)
 	var m Metrics
 	err := json.Unmarshal(buffer, &m)
 	if err != nil {
+        fmt.Println(err)
 		return
 	}
 	fmt.Println(host, m)
 	es.SendMessage(fmt.Sprintf("%f", m.CpuFreq), fmt.Sprintf("%s-%s", host, "cpufreq"), "")
 	es.SendMessage(fmt.Sprintf("%f", m.CpuTemp), fmt.Sprintf("%s-%s", host, "cputemp"), "")
+	es.SendMessage(fmt.Sprintf("%d", (int)(m.CpuUsage*100)), fmt.Sprintf("%s-%s", host, "cpuusage"), "")
 }
 
 // listens to UDP data and injects events after parsing them
@@ -91,11 +93,27 @@ func doListen(conn *net.UDPConn, es eventsource.EventSource) {
 // set up the multicast listener
 func MulticastListener(es eventsource.EventSource) {
 	// now try to listen to our specific group
-	mcaddr, err := net.ResolveUDPAddr("udp", multicastAddr)
-	conn, err := net.ListenMulticastUDP("udp", nil, mcaddr)
+	intf, err := net.InterfaceByName("eth0")
 	if err != nil {
 		log.Fatal(err)
 	}
+    mcaddr, err := net.ResolveUDPAddr("udp", multicastAddr)
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Printf("Listening on interface %s\n", intf.HardwareAddr)
+	conn, err := net.ListenMulticastUDP("udp", intf, mcaddr)
+	if err != nil {
+		log.Fatal(err)
+	}
+    addrs, err := intf.MulticastAddrs()
+	if err != nil {
+		log.Fatal(err)
+	}
+    for i:=0;i<len(addrs);i++ {
+        fmt.Printf("%s\n", addrs[i])
+    }
+
 	go doListen(conn, es)
 }
 
