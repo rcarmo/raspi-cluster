@@ -1,26 +1,98 @@
 {
-	"widgets": [
-		{
-			"kind"     :  "clock",
-			"id"       :  "myclock",
+    "widgets": [
+        {
+            "kind"     :  "clock",
+            "id"       :  "myclock",
             "subscribe":  "tick-event"
-		}, 
+        }, 
         {
             "kind"     : "meter",
-            "id"       : "bluebox-cputemp",
-            "subscribe": "bluebox-cputemp",
-            "title"    : "bluebox",
+            "id"       : "master-cpuusage",
+            "subscribe": "master-cpuusage",
+            "title"    : "master",
+            "value"    : 0,
+            "info"     : "CPU %"
+        },
+        {
+            "kind"     : "meter",
+            "id"       : "node1-cpuusage",
+            "subscribe": "node1-cpuusage",
+            "title"    : "Node 1",
+            "value"    : 0,
+            "info"     : "CPU %"
+        },
+        {
+            "kind"     : "meter",
+            "id"       : "node2-cpuusage",
+            "subscribe": "node2-cpuusage",
+            "title"    : "Node 2",
+            "value"    : 0,
+            "info"     : "CPU %"
+        },
+        {
+            "kind"     : "meter",
+            "id"       : "node3-cpuusage",
+            "subscribe": "node3-cpuusage",
+            "title"    : "Node 3",
+            "value"    : 0,
+            "info"     : "CPU %"
+        },
+        {
+            "kind"     : "meter",
+            "id"       : "node4-cpuusage",
+            "subscribe": "node4-cpuusage",
+            "title"    : "Node 4",
+            "value"    : 0,
+            "info"     : "CPU %"
+        },
+        {
+            "kind"     : "meter",
+            "id"       : "master-cputemp",
+            "subscribe": "master-cputemp",
+            "title"    : "master",
+            "value"    : 0,
+            "info"     : "Celsius"
+        },
+        {
+            "kind"     : "meter",
+            "id"       : "node1-cputemp",
+            "subscribe": "node1-cputemp",
+            "title"    : "Node 1",
+            "value"    : 0,
+            "info"     : "Celsius"
+        },
+        {
+            "kind"     : "meter",
+            "id"       : "node2-cputemp",
+            "subscribe": "node2-cputemp",
+            "title"    : "Node 2",
+            "value"    : 0,
+            "info"     : "Celsius"
+        },
+        {
+            "kind"     : "meter",
+            "id"       : "node3-cputemp",
+            "subscribe": "node3-cputemp",
+            "title"    : "Node 3",
+            "value"    : 0,
+            "info"     : "Celsius"
+        },
+        {
+            "kind"     : "meter",
+            "id"       : "node4-cputemp",
+            "subscribe": "node4-cputemp",
+            "title"    : "Node 4",
             "value"    : 0,
             "info"     : "Celsius"
         },
         {
             "kind"     : "linechart",
-            "id"       : "bluebox-trends",
-            "subscribe": "bluebox-cputemp",
-            "title"    : "Temperature Chart",
+            "id"       : "master-trends",
+            "subscribe": "master-cpuusage",
+            "title"    : "Master CPU",
             "history"  : [0],
             "sizex"    : 2,
             "sizey"    : 2
         }
-	]
+    ]
 }
