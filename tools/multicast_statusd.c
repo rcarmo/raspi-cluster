@@ -178,7 +178,10 @@ int main() {
     //mtrace();
 
     /* set up socket */
+    char *opt;
+    opt = "eth0"; 
     sock = socket(AF_INET, SOCK_DGRAM, 0);
+    setsockopt(sock, SOL_SOCKET, SO_BINDTODEVICE, opt, strlen(opt));
     if (sock < 0) {
         perror("Could not create socket, exiting");
         exit(2);
