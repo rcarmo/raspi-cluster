@@ -17,7 +17,7 @@ import (
 	"encoding/json"
 )
 
-var listenPort int = 8888 
+var listenPort int = 8888
 var staticPath string = "static"
 var multicastAddr string = "224.0.0.251:6000"
 var hostCache map[string]string
@@ -44,6 +44,7 @@ type Metrics struct {
 func ClockSource(es eventsource.EventSource) {
 	id := 1
 	for {
+		es.SendMessage(fmt.Sprintf("%d", es.ConsumersCount()), "consumer-count", "")
 		es.SendMessage("tick", "tick-event", strconv.Itoa(id))
 		id++
 		time.Sleep(5 * time.Second)
@@ -68,7 +69,7 @@ func parseAndSendMetrics(host string, buffer []byte, es eventsource.EventSource)
 	var m Metrics
 	err := json.Unmarshal(buffer, &m)
 	if err != nil {
-        fmt.Println(err)
+		fmt.Println(err)
 		return
 	}
 	fmt.Println(host, m)
@@ -97,7 +98,7 @@ func MulticastListener(es eventsource.EventSource) {
 	if err != nil {
 		log.Fatal(err)
 	}
-    mcaddr, err := net.ResolveUDPAddr("udp", multicastAddr)
+	mcaddr, err := net.ResolveUDPAddr("udp", multicastAddr)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -106,13 +107,13 @@ func MulticastListener(es eventsource.EventSource) {
 	if err != nil {
 		log.Fatal(err)
 	}
-    addrs, err := intf.MulticastAddrs()
+	addrs, err := intf.MulticastAddrs()
 	if err != nil {
 		log.Fatal(err)
 	}
-    for i:=0;i<len(addrs);i++ {
-        fmt.Printf("%s\n", addrs[i])
-    }
+	for i := 0; i < len(addrs); i++ {
+		fmt.Printf("%s\n", addrs[i])
+	}
 
 	go doListen(conn, es)
 }
