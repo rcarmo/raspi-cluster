@@ -5,17 +5,17 @@
 
 ## What?
 
-A few months back, I decided I'd build a small cluster of [Raspberry Pi][rpi] boards, and this repository will be used for versioning design notes, configuration files and sundry.
+A few months back, I decided I'd build a small cluster of [Raspberry Pi][rpi] boards, and this repository is used for versioning design notes, configuration files and sundry.
 
 ## Why?
 
-I wanted something challenging to do in terms of distributed processing, and lacked dedicated hardware to do it.
+I wanted something challenging to do in terms of distributed processing, and lacked dedicated hardware to do it. There's a lot to be learned even from simple, unsophisticated solutions, and virtual machines can only do so much.
 
 ## How?
 
-The cluster consists of five nodes: a master and four slaves. The master acts as a gateway, DHCP and NFS server and the slave nodes get their IP address and `/mnt/jobs` directory from it.
+The cluster consists of five nodes: a master and four slaves. The master acts as a gateway, DHCP and NFS server and the slave nodes get their IP address and `/srv/jobs` directory from it.
 
-All slave nodes should be identical -- _completely_ identical, except for the MAC address, and there should be _zero_ need to log in and configure things manually for each node.
+All slave nodes are identical -- _completely_ identical, except for hostname and MAC address, and there is no need to log in and configure things manually for each node.
 
 Here's a couple more shots of it, with the 5-port PSU and the initial assembly:
 
@@ -28,7 +28,7 @@ A larger cluster is certainly feasible, but 5 boards is as much as I can power w
 
 ## Hardware
 
-This is a partial list of the stuff I'm using, and which I'll be updating (Amazon UK affiliate links):
+This is a partial list of the stuff I'm using (Amazon UK affiliate links):
 
 * [5x Raspberry Pi Model B](http://www.amazon.co.uk/Raspberry-Pi-Model-512MB-RAM/dp/B008PT4GGC/ref=as_li_tf_tl?ie=UTF8&tag=thtaofma-21&linkCode=as2&camp=1634&creative=6738) boards (duh!)
 * [7x Class 10 SD Cards](http://www.amazon.co.uk/gp/product/B003VNKNEG/ref=as_li_tf_tl?ie=UTF8&tag=thtaofma-21&linkCode=as2&camp=1634&creative=6738) (2 master cards, 5 for production)
@@ -42,24 +42,24 @@ This is a partial list of the stuff I'm using, and which I'll be updating (Amazo
 
 ## Software
 
-The cluster will run MPI-enabled Linux, but the first jobs will be mostly [Clojure][clj] programs using [Hazelcast][hz] atop JDK 1.8
+The cluster is now running mostly [Clojure][clj] programs using [Hazelcast][hz] atop JDK 1.8. 
 
-It's a bit ironic to run an in-memory data grid on what is essentially 2.5GB of aggregated RAM, but I'm interested in the algorithms themselves and don't plan on doing something silly like tackling the next Netflix Prize with this.
+I have also set up [Disco][dp] on it and intend to fiddle with MPI, but am mostly interested in exploring what I can do with an in-memory data grid.
 
-Besides, running things on low-end hardware is often the only way to do proper optimization.
+It's a bit ironic to do that on what is essentially 2.5GB of aggregated RAM, but I'm interested in the algorithms themselves and don't plan on doing something silly like tackling the next Netflix Prize with this -- besides, running things on low-end hardware is often the only way to do proper optimization.
 
 ### List of packages involved so far:
 
-* A custom daemon that sends out a JSON-formatted multicast packet with system load, CPU usage and RAM statistics (available in `tools`)
-* [Dash](https://github.com/rcarmo/dash), a little hack I'm rebuilding.
+* [Dash](https://github.com/rcarmo/dash), a real-time status dashboard (rewritten in [Go][golang], available in `dash` and still being worked on)
+* A custom daemon that sends out a JSON-formatted multicast packet with system load, CPU usage and RAM statistics (written in raw C, available in `tools`)
 * [Moebius Linux][moebius] as a base distro (it's essentially Raspbian without the bloat)
 * `rpi-update` to get the kernel up to 3.10.x with minimal hassle (need to sort out MPI later)
 * `dnsmasq` for DHCP and DNS service on the master to the slaves
-* Oracle JDK 7 (tried the [JDK 8 Early Release](https://jdk8.java.net/download.html), but was getting inconsistent results, will go back to it later)
+* Oracle [JDK 8](https://jdk8.java.net/download.html)
 * [leiningen][lein] (which fetches [Hazelcast][hz] and other dependencies for me, via [this library][clj-hz])
 * [Nightcode][nc] as a development environment ([LightTable][lt] doesn't run on ARM, and a lot of my hobby coding these days is actually done on an [ODROID][u2])
 
-Here's what the cluster dashboard looks like after a little hacking:
+Here's what the cluster dashboard looks like:
 
 ![First pass at a dashboard](https://raw.github.com/rcarmo/raspi-cluster/master/pics/dash.jpg)
 
@@ -82,3 +82,5 @@ But I'm open to [sponsoring][d] so that I can upgrade this to be based on 4 or 5
 [moebius]: http://moebiuslinux.sourceforge.net
 [lein]: http://leiningen.org
 [clj-hz]: https://github.com/rcarmo/clj-hazelcast
+[dp]: http://discoproject.org
+[golang]: http://www.golang.org
