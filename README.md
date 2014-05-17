@@ -50,7 +50,7 @@ It's a bit ironic to do that on what is essentially 2.5GB of aggregated RAM, but
 
 ### List of packages involved so far:
 
-* [Dash](https://github.com/rcarmo/dash), a real-time status dashboard (rewritten in [Go][golang], available in `dash` and still being worked on)
+* [Dash](https://github.com/rcarmo/dash), a real-time status dashboard (rewritten in [Go][golang], available in `dashboard` and still being worked on)
 * A custom daemon that sends out a JSON-formatted multicast packet with system load, CPU usage and RAM statistics (written in raw C, available in `tools`)
 * [Moebius Linux][moebius] as a base distro (it's essentially Raspbian without the bloat)
 * `rpi-update` to get the kernel up to 3.10.x with minimal hassle (need to sort out MPI later)
