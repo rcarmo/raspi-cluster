@@ -50,14 +50,15 @@ It's a bit ironic to do that on what is essentially 2.5GB of aggregated RAM, but
 
 ### List of packages involved so far:
 
-* [Dash](https://github.com/rcarmo/dash), a real-time status dashboard (rewritten in [Go][golang], available in `dashboard` and still being worked on)
+* [Dash](https://github.com/rcarmo/dash), a real-time status dashboard (rewritten in [Go][golang], available under the `dashboard` folder here, and still being worked on)
 * A custom daemon that sends out a JSON-formatted multicast packet with system load, CPU usage and RAM statistics (written in raw C, available in `tools`)
-* [Moebius Linux][moebius] as a base distro (it's essentially Raspbian without the bloat)
-* `rpi-update` to get the kernel up to 3.10.x with minimal hassle (need to sort out MPI later)
-* `dnsmasq` for DHCP and DNS service on the master to the slaves
+* [ElasticSearch](http://www.elasticsearch.org), which I'm using for playing around with data mining/metrics/etc.
 * Oracle [JDK 8](https://jdk8.java.net/download.html)
 * [leiningen][lein] (which fetches [Hazelcast][hz] and other dependencies for me, via [this library][clj-hz])
 * [Nightcode][nc] as a development environment ([LightTable][lt] doesn't run on ARM, and a lot of my hobby coding these days is actually done on an [ODROID][u2])
+* [Moebius Linux][moebius] as a base distro (it's essentially Raspbian without the bloat)
+* `rpi-update` to get the kernel up to 3.10.x with minimal hassle (need to sort out MPI later)
+* `dnsmasq` for DHCP and DNS service on the master to the slaves
 
 Here's what the cluster dashboard looks like:
 
