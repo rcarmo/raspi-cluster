@@ -44,12 +44,13 @@ This is a partial list of the stuff I'm using (Amazon UK affiliate links):
 
 The cluster is now running mostly [Clojure][clj] programs using [Hazelcast][hz] atop JDK 1.8. 
 
-I have also set up [Disco][dp] on it and intend to fiddle with MPI, but am mostly interested in exploring what I can do with an in-memory data grid.
+I have also set up [Disco][dp] (and now [Spark][spark]) on it and intend to fiddle with MPI, but am mostly interested in exploring what I can do with an in-memory data grid.
 
 It's a bit ironic to do that on what is essentially 2.5GB of aggregated RAM, but I'm interested in the algorithms themselves and don't plan on doing something silly like tackling the next Netflix Prize with this -- besides, running things on low-end hardware is often the only way to do proper optimization.
 
 ### List of packages involved so far:
 
+* [Spark][spark], which has replaced [Disco][dp] for map/reduce jobs.
 * [Dash](https://github.com/rcarmo/dash), a real-time status dashboard (rewritten in [Go][golang], available under the `dashboard` folder here, and still being worked on)
 * A custom daemon that sends out a JSON-formatted multicast packet with system load, CPU usage and RAM statistics (written in raw C, available in `tools`)
 * [ElasticSearch](http://www.elasticsearch.org), which I'm using for playing around with data mining/metrics/etc.
@@ -85,3 +86,4 @@ But I'm open to [sponsoring][d] so that I can upgrade this to be based on 4 or 5
 [clj-hz]: https://github.com/rcarmo/clj-hazelcast
 [dp]: http://discoproject.org
 [golang]: http://www.golang.org
+[spark]: http://spark.apache.org
