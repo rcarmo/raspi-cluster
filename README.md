@@ -5,7 +5,7 @@
 
 ## What?
 
-A while ago I decided to build a small cluster of [Raspberry Pi][rpi] boards (since upgraded to Pi 2 boards, and this repository is used for versioning design notes, configuration files and sundry.
+A while ago I decided to build a small cluster of [Raspberry Pi][rpi] boards. I've since upgraded to Pi 2 boards, and this repository is used for versioning design notes, configuration files and sundry.
 
 ## Why?
 
