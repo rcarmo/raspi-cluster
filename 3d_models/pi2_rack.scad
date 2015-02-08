@@ -1,6 +1,8 @@
 //preview[view:east, tilt:top]
 
-/* A remix of http://www.thingiverse.com/thing:664343 designed to put boards upright */
+/* A remix of http://www.thingiverse.com/thing:664343 designed to:
+   - put boards upright and hold them in place
+   - provide some headroom to prevent bumping the Micro SD card */
 
 /* [Global] */
 //how many raspis to stack on each other
