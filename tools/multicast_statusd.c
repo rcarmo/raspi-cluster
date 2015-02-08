@@ -99,7 +99,7 @@ float get_cpuusage(int interval) {
     long delta[7] = {0};
     int  i, sum = 0;
    
-    /* First, sample current jiffie counters */
+    /* First, sample current jiffie counters - we do this for the global counters only right now, so TODO: sample each individual CPU core separately */
     fp = fopen("/proc/stat", "r");
     if (fp != NULL) {
         fgets(line, MAX_LENGTH, fp);
