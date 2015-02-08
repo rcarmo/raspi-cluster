@@ -58,7 +58,6 @@ It's a bit ironic to do that on merely 5GB of aggregated RAM, but I'm interested
 * [leiningen][lein] (which fetches [Hazelcast][hz] and other dependencies for me, via [this library][clj-hz])
 * [Nightcode][nc] as a development environment ([LightTable][lt] doesn't run on ARM, and a lot of my hobby coding these days is actually done on an [ODROID][u2])
 * `distcc` for building binaries slightly faster
-* `rpi-update` to get the kernel up to 3.10.x with minimal hassle (need to sort out MPI later)
 * `dnsmasq` for DHCP and DNS service on the master to the slaves
 
 Here's what the cluster dashboard looks like:
