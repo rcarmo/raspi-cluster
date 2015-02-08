@@ -42,8 +42,8 @@ module one_u(){
         translate([rpi_width,-wall*4,wall])
             cube([5*wall,port_len+wall*4,port_height]);
         //power plug clearance
-        translate([rpi_width,wall,-wall])
-            cube([3*wall,wall*5,port_height+wall]);
+        translate([rpi_width-wall,wall*3,-wall])
+            cube([4*wall,wall*7,port_height-wall*2]);
         //bottom ports
         translate([-wall,wall*2,wall*3])
             cube([3*wall,port_len-wall*3,port_height]);
@@ -54,16 +54,17 @@ module one_u(){
 }
 
 module board_clips(index) {
-    translate([0,-wall,wall*1.2])
+    translate([0,wall,wall*1.2])
         difference(){
             union() {
                 cube([2*wall,2*wall,2*wall]);
-                if(index>1) /* remove top clip so board will slide in */
+                if(index>1) {/* remove top clip so board will slide in */
                     translate([rpi_width,0,-wall])
                         cube([2*wall,2*wall,3*wall]);
-                // breakaway support
-                translate([rpi_width+wall,wall*2-0.2,0])
-                    cube([wall,0.2,u_height]);
+                	    // breakaway support
+	                translate([rpi_width+wall,wall*2-0.4,0])
+    		                cube([wall,0.4,u_height]);
+                }
                 translate([0,rpi_length-wall*3,0])
                     cube([2*wall,2*wall,2*wall]);
                 translate([rpi_width,rpi_length-wall*3,0])
