@@ -17,7 +17,7 @@ The cluster consists of five nodes: a master and four slaves. The master acts as
 
 All slave nodes are identical -- _completely_ identical, except for hostname and MAC address, and there is no need to log in and configure things manually for each node.
 
-Here's a few more shots of it, with the 5-port PSU and the initial assembly:
+Here's a few more shots of the original version, with the 5-port PSU and the old Model B boards:
 
 ![Cabled](https://raw.github.com/rcarmo/raspi-cluster/master/pics/ethernet.jpg)
 ![Power cords](https://raw.github.com/rcarmo/raspi-cluster/master/pics/micro_usb.jpg)
