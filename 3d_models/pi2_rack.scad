@@ -62,7 +62,7 @@ module board_clips(index) {
                     translate([rpi_width,0,-wall])
                         cube([2*wall,2*wall,3*wall]);
                 	    // breakaway support
-	                translate([rpi_width+wall,wall*2-0.4,0])
+	                translate([rpi_width+wall,wall*2-0.4,-wall*2])
     		                cube([wall,0.4,u_height]);
                 }
                 translate([0,rpi_length-wall*3,0])
