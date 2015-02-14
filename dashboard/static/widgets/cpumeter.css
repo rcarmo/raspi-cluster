@@ -1,0 +1,16 @@
+.widget-cpumeter {
+  background-color: #42749c;
+}
+.widget-cpumeter input.cpumeter {
+  background-color: #5080a0;
+  color: #fff;
+}
+.widget-cpumeter .title {
+  color: rgba(255, 255, 255, 0.7);
+}
+.widget-cpumeter .more-info {
+  color: rgba(255, 255, 255, 0.3);
+}
+.widget-cpumeter .updated-at {
+  color: rgba(0, 0, 0, 0.3);
+}

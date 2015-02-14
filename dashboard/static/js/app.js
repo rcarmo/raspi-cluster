@@ -72,7 +72,7 @@ function Dashboard(source) {
         var widget = window[item.kind + '_widget'](el, $.extend(item, {template: templates[item.kind]}));
         /* now create a closure that will update the widget when its subscribed event pops up */
         widget.source.addEventListener(widget.subscribe, function(e) {
-            console.log(e);
+            //console.log(e);
             widget.trigger("update", e);
         });
         dashboard.widgets.push(widget);
