@@ -1,10 +1,10 @@
 /*
- * Raspberry Pi system monitor
+ * Raspberry Pi/Pi 2 system monitor
  *
  * This quick and dirty program sends out a JSON-formatted UDP multicast packet with system statistics every 2 seconds
  * - which is useful not just for cluster monitoring but also as a visible heartbeat
  *
- * Rui Carmo, 2014, MIT licensed.
+ * Rui Carmo, 2014/2015, MIT licensed.
  */
 
 #include <sys/types.h>
@@ -22,11 +22,14 @@
 
 #define ANNOUNCEMENT_GROUP "224.0.0.251"
 #define ANNOUNCEMENT_PORT 6000
-#define ANNOUNCEMENT_TEMPLATE "{\"cpufreq\":%d,\"cputemp\":%f,\"cpuusage\":%f,\"loadavg\":%s,\"meminfo\":{%s}}"
+#define ANNOUNCEMENT_TEMPLATE "{\"cpufreq\":%d,\"cputemp\":%f,\"cpuusage\":%f,\"coreusage\":[%s],\"loadavg\":%s,\"meminfo\":{%s}}"
 #define MAX_LENGTH 1024
+#define MAX_CORES 4
+#define CPU_STAT_COUNT 7 /* user, nice, system, idle, iowait, irq, softirq */
 
 char loadavg_buffer[MAX_LENGTH];
 char meminfo_buffer[MAX_LENGTH];
+float core_usage[MAX_CORES+1];
 
 /*
  * Get current CPU frequency
@@ -90,22 +93,27 @@ char *get_loadavg(void) {
 
 
 /*
- * Get CPU usage by measuring jiffie counters
+ * Get CPU usage by measuring jiffie counters - returns number of cores sampled
  */
-float get_cpuusage(int interval) {
+int get_cpuusage(int interval) {
     FILE *fp;
     char line[MAX_LENGTH];
-    long stat[7]  = {0}; /* user, nice, system, idle, iowait, irq, softirq */
-    long delta[7] = {0};
-    int  i, sum = 0;
+    long stat[CPU_STAT_COUNT*(MAX_CORES+1)]  = {0};
+    long delta[CPU_STAT_COUNT*(MAX_CORES+1)] = {0};
+    int  i, j, c, sum  = 0;
+    float usage;
    
-    /* First, sample current jiffie counters - we do this for the global counters only right now, so TODO: sample each individual CPU core separately */
+    /* First, sample current jiffie counters */
     fp = fopen("/proc/stat", "r");
     if (fp != NULL) {
-        fgets(line, MAX_LENGTH, fp);
-        strtok(line, " \n");
-        for(i=0;i<7;i++)
-            stat[i] = strtol(strtok(NULL, " \n"), NULL, 10);
+        for(c=0;c<=MAX_CORES;c++) {
+            fgets(line, MAX_LENGTH, fp);
+            if(strncmp(strtok(line, " \n"), "cpu", 3) == 0) {
+                for(i=0;i<CPU_STAT_COUNT;i++)
+                    stat[CPU_STAT_COUNT*c+i] = strtol(strtok(NULL, " \n"), NULL, 10);
+            }
+            else break;
+        }
     }
     fclose(fp);
 
@@ -115,22 +123,29 @@ float get_cpuusage(int interval) {
     /* And resample */
     fp = fopen("/proc/stat", "r");
     if (fp != NULL) {
-         fgets(line, MAX_LENGTH, fp);
-         strtok(line, " \n");
-         for(i=0;i<7;i++)
-            delta[i] = strtol(strtok(NULL, " \n"), NULL, 10);
+        for(c=0;c<=MAX_CORES;c++) {
+            fgets(line, MAX_LENGTH, fp);
+            if(strncmp(strtok(line, " \n"), "cpu", 3) == 0) {
+                for(i=0;i<CPU_STAT_COUNT;i++)
+                    delta[CPU_STAT_COUNT*c+i] = strtol(strtok(NULL, " \n"), NULL, 10);
+            }
+            else break;
+        }
     }
     fclose(fp);
 
     /* Now compute the deltas and total time spent in each state */
-    for(i=0;i<7;i++) {
-       delta[i] -= stat[i];
-       sum += delta[i];
+    for(j=0;j<c;j++) {
+        for(i=0;i<7;i++) {
+            delta[CPU_STAT_COUNT*j+i] -= stat[CPU_STAT_COUNT*j+i];
+            sum += delta[CPU_STAT_COUNT*j+i];
+        }
+        if(sum > 0) { /* function of idle time */
+            core_usage[j] = 1.0 - (delta[CPU_STAT_COUNT*j+3] / (1.0 * sum));
+        }
+	else core_usage[j] = 0.0;
     }
-    if(sum > 0) { /* function of idle time */
-      return 1.0 - (delta[3] / (1.0 * sum));
-    }
-    return 0.0;
+    return c;
 }
 
 
@@ -172,8 +187,8 @@ char *get_meminfo(void) {
 
 int main() {
     struct sockaddr_in addr;
-    int    msg_len, addr_len, sock, count;
-    char   msg[MAX_LENGTH];
+    int    i, msg_len, addr_len, sock, count;
+    char   msg[MAX_LENGTH], usage[MAX_LENGTH], scratch[MAX_LENGTH];
 
     //mtrace();
 
@@ -193,7 +208,17 @@ int main() {
     addr_len             = sizeof(addr);
 
     while (1) {
-        msg_len = sprintf(msg, ANNOUNCEMENT_TEMPLATE, get_cpufreq(), get_cputemp(), get_cpuusage(2), get_loadavg(), get_meminfo());
+        bzero((char *)&usage, MAX_LENGTH);
+        count = get_cpuusage(2);
+        for(i=1;i<count;i++) {
+            sprintf(scratch, "%f,", core_usage[i]);
+            strcat(usage, scratch);
+        }
+        i = strlen(usage);
+        if(i) {
+            usage[i-1] = '\0'; /* strip comma */
+        }
+        msg_len = sprintf(msg, ANNOUNCEMENT_TEMPLATE, get_cpufreq(), get_cputemp(), core_usage[0], usage, get_loadavg(), get_meminfo());
         // note that we're not sending msg_len + 1 data to avoid sending the \0.
         count = sendto(sock, msg, msg_len, 0, (struct sockaddr *) &addr, addr_len);
         if (count < 0) {
