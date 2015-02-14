@@ -1,0 +1,34 @@
+.widget-coremeter {
+  background-color: #429c74;
+}
+.widget-coremeter div.barholder {
+  display: block;
+  width: 200px;
+  height: 180px !important;
+  align: center;
+}
+.widget-coremeter div.barholder ul.barchart {
+  width: 200px !important;
+  height: 180px !important;
+  padding: 10px;
+  vertical-align: bottom;
+  display: inline-block;
+}
+.widget-coremeter div.barholder ul.barchart li {
+   padding: 5px;
+   display: inline-block;
+   width: 35px !important;
+   position: absolute;
+   float: left;
+   bottom: 10px;
+   background-color: rgba(128,192,192,0.5);
+}
+.widget-coremeter div.barholder ul.barchart :nth-child(1) {
+   left: 62px;
+}
+.widget-coremeter div.barholder ul.barchart :nth-child(2) {
+   left: 114px;
+}
+.widget-coremeter div.barholder ul.barchart :nth-child(3) {
+   left: 166px;
+}

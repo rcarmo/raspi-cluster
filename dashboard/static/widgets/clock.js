@@ -43,7 +43,7 @@ function clock_widget(el, data) {
     });
 
     model.on("update", function(e) {
-        console.log(e);
+        //console.log(e);
     });
 
     model.trigger("init");

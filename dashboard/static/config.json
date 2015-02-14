@@ -6,15 +6,55 @@
             "subscribe":  "tick-event"
         }, 
         {
-            "kind"     : "meter",
-            "id"       : "cluster-cpuusage",
-            "subscribe": "cluster-cpuusage",
+            "kind"     : "coremeter",
+            "id"       : "master-coreusage",
+            "subscribe": "master-coreusage",
+            "title"    : "master",
+            "value"    : [0,0,0,0],
+            "info"     : "CPU cores"
+        },
+        {
+            "kind"     : "coremeter",
+            "id"       : "node1-coreusage",
+            "subscribe": "node1-coreusage",
+            "title"    : "Node 1",
+            "value"    : [0,0,0,0],
+            "info"     : "CPU cores"
+        },
+        {
+            "kind"     : "coremeter",
+            "id"       : "node2-coreusage",
+            "subscribe": "node2-coreusage",
+            "title"    : "Node 2",
+            "value"    : [0,0,0,0],
+            "info"     : "CPU cores"
+        },
+        {
+            "kind"     : "coremeter",
+            "id"       : "node3-coreusage",
+            "subscribe": "node3-coreusage",
+            "title"    : "Node 3",
+            "value"    : [0,0,0,0],
+            "info"     : "CPU Cores"
+        },
+        {
+            "kind"     : "coremeter",
+            "id"       : "node4-coreusage",
+            "subscribe": "node4-coreusage",
+            "title"    : "Node 4",
+            "value"    : [0,0,0,0],
+            "info"     : "CPU cores"
+        },
+        {
+            "kind"     : "cpumeter",
+            "id"       : "master-cpuusage",
+            "subscribe": "master-cpuusage",
             "title"    : "master",
             "value"    : 0,
             "info"     : "CPU %"
         },
         {
-            "kind"     : "meter",
+            "kind"     : "cpumeter",
             "id"       : "node1-cpuusage",
             "subscribe": "node1-cpuusage",
             "title"    : "Node 1",
@@ -22,7 +62,7 @@
             "info"     : "CPU %"
         },
         {
-            "kind"     : "meter",
+            "kind"     : "cpumeter",
             "id"       : "node2-cpuusage",
             "subscribe": "node2-cpuusage",
             "title"    : "Node 2",
@@ -30,7 +70,7 @@
             "info"     : "CPU %"
         },
         {
-            "kind"     : "meter",
+            "kind"     : "cpumeter",
             "id"       : "node3-cpuusage",
             "subscribe": "node3-cpuusage",
             "title"    : "Node 3",
@@ -38,7 +78,7 @@
             "info"     : "CPU %"
         },
         {
-            "kind"     : "meter",
+            "kind"     : "cpumeter",
             "id"       : "node4-cpuusage",
             "subscribe": "node4-cpuusage",
             "title"    : "Node 4",
@@ -88,7 +128,7 @@
         {
             "kind"     : "linechart",
             "id"       : "master-trends",
-            "subscribe": "cluster-cpuusage",
+            "subscribe": "master-cpuusage",
             "title"    : "Master CPU",
             "history"  : [0],
             "sizex"    : 2,
