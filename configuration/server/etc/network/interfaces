@@ -2,13 +2,15 @@ auto lo
 
 iface lo inet loopback
 iface eth0 inet static
- address 10.0.0.1
- network 10.0.0.0
- netmask 255.255.255.0
- broadcast 10.0.0.255
+        address 10.0.0.1
+        network 10.0.0.0
+        netmask 255.255.255.0
+        broadcast 10.0.0.255
 
 pre-up iptables-restore < /etc/iptables.rules
 allow-hotplug wlan0
 iface wlan0 inet dhcp
-wpa-conf /etc/wpa_supplicant/wpa_supplicant.conf
+        wpa-ssid MYSSID
+        wpa-psk <generated with wpa_passphrase MYSSID passphrase>
+
 iface default inet dhcp
