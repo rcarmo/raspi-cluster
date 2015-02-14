@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	eventsource "github.com/antage/eventsource/http"
+	"github.com/antage/eventsource"
 	//"github.com/bmizerany/pat"          // Sinatra-like router
 	//"github.com/fiorix/go-web/autogzip" // gzip support
 	//"github.com/hoisie/mustache"  Mustache-like templating engine
@@ -23,10 +23,11 @@ var multicastAddr string = "224.0.0.251:6000"
 var hostCache map[string]string
 
 type Metrics struct {
-	CpuFreq  float64    `json:"cpufreq"`
-	CpuTemp  float64    `json:"cputemp"`
-	CpuUsage float64    `json:"cpuusage"`
-	LoadAvg  [3]float64 `json:"loadavg"`
+	CpuFreq   float64    `json:"cpufreq"`
+	CpuTemp   float64    `json:"cputemp"`
+	CpuUsage  float64    `json:"cpuusage"`
+	CoreUsage [4]float64 `json:"coreusage"`
+	LoadAvg   [3]float64 `json:"loadavg"`
 	// A partial breakdown of the memory information
 	MemInfo struct {
 		MemTotal   float64
@@ -44,8 +45,8 @@ type Metrics struct {
 func ClockSource(es eventsource.EventSource) {
 	id := 1
 	for {
-		es.SendMessage(fmt.Sprintf("%d", es.ConsumersCount()), "consumer-count", "")
-		es.SendMessage("tick", "tick-event", strconv.Itoa(id))
+		es.SendEventMessage(fmt.Sprintf("%d", es.ConsumersCount()), "consumer-count", "")
+		es.SendEventMessage("tick", "tick-event", strconv.Itoa(id))
 		id++
 		time.Sleep(5 * time.Second)
 	}
@@ -73,9 +74,11 @@ func parseAndSendMetrics(host string, buffer []byte, es eventsource.EventSource)
 		return
 	}
 	fmt.Println(host, m)
-	es.SendMessage(fmt.Sprintf("%f", m.CpuFreq), fmt.Sprintf("%s-%s", host, "cpufreq"), "")
-	es.SendMessage(fmt.Sprintf("%f", m.CpuTemp), fmt.Sprintf("%s-%s", host, "cputemp"), "")
-	es.SendMessage(fmt.Sprintf("%d", (int)(m.CpuUsage*100)), fmt.Sprintf("%s-%s", host, "cpuusage"), "")
+	es.SendEventMessage(fmt.Sprintf("%f", m.CpuFreq), fmt.Sprintf("%s-%s", host, "cpufreq"), "")
+	es.SendEventMessage(fmt.Sprintf("%f", m.CpuTemp), fmt.Sprintf("%s-%s", host, "cputemp"), "")
+	usage, _ := json.Marshal(m.CoreUsage)
+	es.SendEventMessage(string(usage), fmt.Sprintf("%s-%s", host, "coreusage"), "")
+	es.SendEventMessage(fmt.Sprintf("%f", m.CpuUsage), fmt.Sprintf("%s-%s", host, "cpuusage"), "")
 }
 
 // listens to UDP data and injects events after parsing them
