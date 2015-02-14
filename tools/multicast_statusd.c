@@ -100,7 +100,7 @@ int get_cpuusage(int interval) {
     char line[MAX_LENGTH];
     long stat[CPU_STAT_COUNT*(MAX_CORES+1)]  = {0};
     long delta[CPU_STAT_COUNT*(MAX_CORES+1)] = {0};
-    int  i, j, c, sum  = 0;
+    int  i, j, c, sum, offset = 0;
     float usage;
    
     /* First, sample current jiffie counters */
@@ -109,8 +109,9 @@ int get_cpuusage(int interval) {
         for(c=0;c<=MAX_CORES;c++) {
             fgets(line, MAX_LENGTH, fp);
             if(strncmp(strtok(line, " \n"), "cpu", 3) == 0) {
+                offset = c * CPU_STAT_COUNT;
                 for(i=0;i<CPU_STAT_COUNT;i++)
-                    stat[CPU_STAT_COUNT*c+i] = strtol(strtok(NULL, " \n"), NULL, 10);
+                    stat[i+offset] = strtol(strtok(NULL, " \n"), NULL, 10);
             }
             else break;
         }
@@ -126,8 +127,9 @@ int get_cpuusage(int interval) {
         for(c=0;c<=MAX_CORES;c++) {
             fgets(line, MAX_LENGTH, fp);
             if(strncmp(strtok(line, " \n"), "cpu", 3) == 0) {
+                offset = c * CPU_STAT_COUNT;
                 for(i=0;i<CPU_STAT_COUNT;i++)
-                    delta[CPU_STAT_COUNT*c+i] = strtol(strtok(NULL, " \n"), NULL, 10);
+                    delta[i+offset] = strtol(strtok(NULL, " \n"), NULL, 10);
             }
             else break;
         }
@@ -136,12 +138,14 @@ int get_cpuusage(int interval) {
 
     /* Now compute the deltas and total time spent in each state */
     for(j=0;j<c;j++) {
+        sum = 0;
+        offset = j * CPU_STAT_COUNT;
         for(i=0;i<7;i++) {
-            delta[CPU_STAT_COUNT*j+i] -= stat[CPU_STAT_COUNT*j+i];
-            sum += delta[CPU_STAT_COUNT*j+i];
+            delta[i+offset] -= stat[i+offset];
+            sum += delta[i+offset];
         }
         if(sum > 0) { /* function of idle time */
-            core_usage[j] = 1.0 - (delta[CPU_STAT_COUNT*j+3] / (1.0 * sum));
+            core_usage[j] = 1.0 - (delta[offset+3] / (1.0 * sum));
         }
 	else core_usage[j] = 0.0;
     }
@@ -210,7 +214,7 @@ int main() {
     while (1) {
         bzero((char *)&usage, MAX_LENGTH);
         count = get_cpuusage(2);
-        for(i=1;i<count;i++) {
+        for(i=0;i<count;i++) {
             sprintf(scratch, "%f,", core_usage[i]);
             strcat(usage, scratch);
         }
