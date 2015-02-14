@@ -214,7 +214,7 @@ int main() {
     while (1) {
         bzero((char *)&usage, MAX_LENGTH);
         count = get_cpuusage(2);
-        for(i=0;i<count;i++) {
+        for(i=1;i<count;i++) { // skip aggregate count
             sprintf(scratch, "%f,", core_usage[i]);
             strcat(usage, scratch);
         }
