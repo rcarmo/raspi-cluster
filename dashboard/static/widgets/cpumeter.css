@@ -4,6 +4,10 @@
 .widget-cpumeter input.cpumeter {
   background-color: #5080a0;
   color: #fff;
+  opacity: 0.8;
+}
+.widget-cpumeter .grouper {
+   display: table; margin: auto;
 }
 .widget-cpumeter .title {
   color: rgba(255, 255, 255, 0.7);
@@ -13,6 +17,9 @@
 }
 .widget-cpumeter .updated-at {
   color: rgba(0, 0, 0, 0.3);
+}
+.widget-cpumeter .grouper canvas {
+  opacity: 0.75;
 }
 .widget-cpumeter .chartholder .chart {
   position: absolute;
