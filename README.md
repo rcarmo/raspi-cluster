@@ -42,23 +42,24 @@ This is a partial list of the stuff I'm using (Amazon UK affiliate links):
 
 ## Software
 
-The cluster is now running mostly [Clojure][clj] programs using [Hazelcast][hz] atop JDK 1.8. 
+The cluster is now running mostly [Clojure][clj] programs using [Hazelcast][hz] atop JDK 1.8, as well as [Jupyter][jy], which runs very nicely indeed and provides me with an agnostic, notebook-oriented front-end.
 
-I have also set up [Disco][dp] (and now [Spark][spark]) on it and intend to fiddle with MPI, but am mostly interested in exploring what I can do with an in-memory data grid.
+I have also set up [Disco][dp] (and now [Spark][spark]) on it and intend to fiddle with MPI, but so far I have plenty of ways to parallelize things.
 
-It's a bit ironic to do that on merely 5GB of aggregated RAM, but I'm interested in the algorithms themselves and don't plan on doing something silly like tackling the next Netflix Prize with this -- besides, running things on low-end hardware is often the only way to do proper optimization.
+It's a bit ironic to do some kinds of processing on merely 5GB of aggregated RAM, but I'm interested in the algorithms themselves and don't plan on doing something silly like tackling the next Netflix Prize with this -- besides, running things on low-end hardware is often the only way to do proper optimization.
 
 ### List of packages involved so far:
 
-* [Spark][spark], which has replaced [Disco][dp] for map/reduce jobs.
+* [Jupyter][jy], which provides me with a nice web front-end and basic Python parallel computing.
+* [Spark][spark], which has mostly replaced [Disco][dp] for map/reduce jobs.
 * [Dash](https://github.com/rcarmo/dash), a real-time status dashboard (rewritten in [Go][golang], available under the `dashboard` folder here, and still being worked on)
 * A custom daemon that sends out a JSON-formatted multicast packet with system load, CPU usage and RAM statistics (written in raw C, available in `tools`)
-* [ElasticSearch](http://www.elasticsearch.org), which I'm using for playing around with data mining/metrics/etc.
+* [ElasticSearch](http://www.elasticsearch.org), which I'm using for storing metrics.
 * Oracle [JDK 8](https://jdk8.java.net/download.html)
 * [leiningen][lein] (which fetches [Hazelcast][hz] and other dependencies for me, via [this library][clj-hz])
 * [Nightcode][nc] as a development environment ([LightTable][lt] doesn't run on ARM, and a lot of my hobby coding these days is actually done on an [ODROID][u2])
 * `distcc` for building binaries slightly faster
-* `dnsmasq` for DHCP and DNS service on the master to the slaves
+* `dnsmasq` for DHCP and DNS service
 
 Here's what the cluster dashboard looks like:
 
@@ -87,3 +88,4 @@ But I'm open to [sponsoring][d] so that I can upgrade this to have at least twic
 [dp]: http://discoproject.org
 [golang]: http://www.golang.org
 [spark]: http://spark.apache.org
+[jy]: http://jupyter.org
