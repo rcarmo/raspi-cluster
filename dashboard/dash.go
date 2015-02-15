@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/antage/eventsource"
+	"github.com/gorilla/handlers"
 	//"github.com/bmizerany/pat"          // Sinatra-like router
 	//"github.com/fiorix/go-web/autogzip" // gzip support
 	//"github.com/hoisie/mustache"  Mustache-like templating engine
@@ -13,7 +14,7 @@ import (
 	"strings"
 	"time"
 	//    "bufio"
-	//    "os"
+	"os"
 	"encoding/json"
 )
 
@@ -134,7 +135,7 @@ func main() {
 	// http.Handle("/", autogzip.Handle(http.FileServer(http.Dir(staticPath))))
 	http.Handle("/", http.FileServer(http.Dir(staticPath)))
 
-	err := http.ListenAndServe(fmt.Sprintf(":%d", listenPort), nil)
+	err := http.ListenAndServe(fmt.Sprintf(":%d", listenPort), handlers.CombinedLoggingHandler(os.Stdout, http.DefaultServeMux))
 	if err != nil {
 		log.Fatal(err)
 	}
