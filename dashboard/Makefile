@@ -8,6 +8,7 @@ $(BINARY): *.go
 deps:
 	mkdir -p vendor
 	go get github.com/antage/eventsource
+	go get github.com/gorilla/handlers
 	find vendor -name .git | xargs rm -rf
 	find vendor -name .hg | xargs rm -rf
 
