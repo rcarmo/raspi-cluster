@@ -14,3 +14,10 @@
 .widget-cpumeter .updated-at {
   color: rgba(0, 0, 0, 0.3);
 }
+.widget-cpumeter .chartholder .chart {
+  position: absolute;
+  left: 15px;
+  width: 190px;
+  height: 180px;
+  z-index: -10;
+}
