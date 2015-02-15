@@ -29,20 +29,24 @@ function linechart_widget(el, data) {
                     strokeColor : "rgba(220,120,120,1)"
                 }]
             },{
-                scaleOverride: true,
-                scaleSteps: 10,
-                scaleStepWidth: (Math.max.apply(Math, data) - Math.min.apply(Math, data))/10,
-                scaleStartValue: (Math.min.apply(Math, data)),
-                scaleShowLabels: true,
-                animation      : false,
-                pointDot       : true 
+                scaleOverride    : true,
+                scaleSteps       : 10,
+                scaleIntegersOnly: true,
+                //scaleStepWidth   : (Math.max.apply(Math, data) - Math.min.apply(Math, data))/10,
+                //scaleStartValue  : (Math.min.apply(Math, data)),
+                scaleStepWidth   : 10,
+                scaleStartValue  : 0,
+                scaleShowLabels  : true,
+                animation        : false,
+                bezierCurve      : false,
+                pointDot         : false
             });
         });
     });
 
     model.on("update", function(ev){
         model.history.push(ev.data);
-        if (model.history.length > 10) {
+        if (model.history.length > 20) {
             model.history.shift();
         }
         model.trigger("render");

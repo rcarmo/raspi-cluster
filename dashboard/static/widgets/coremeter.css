@@ -8,6 +8,7 @@
   align: center;
 }
 .widget-coremeter div.barholder ul.barchart {
+  z-index: -1;
   width: 200px !important;
   height: 180px !important;
   padding: 10px;
@@ -15,13 +16,15 @@
   display: inline-block;
 }
 .widget-coremeter div.barholder ul.barchart li {
-   padding: 5px;
    display: inline-block;
    width: 35px !important;
    position: absolute;
    float: left;
    bottom: 10px;
    background-color: rgba(128,192,192,0.5);
+   border-top: 1px solid rgb(128,192,192);
+   border-left: 1px solid rgb(128,192,192);
+   border-right: 1px solid rgb(128,192,192);
 }
 .widget-coremeter div.barholder ul.barchart :nth-child(1) {
    left: 62px;

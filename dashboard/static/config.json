@@ -132,15 +132,6 @@
             "title"    : "Viewers",
             "value"    : 0,
             "info"     : "Browsers"
-        },
-        {
-            "kind"     : "linechart",
-            "id"       : "master-trends",
-            "subscribe": "master-cpuusage",
-            "title"    : "Master CPU",
-            "history"  : [0],
-            "sizex"    : 2,
-            "sizey"    : 2
         }
     ]
 }
