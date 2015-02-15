@@ -74,7 +74,7 @@ func parseAndSendMetrics(host string, buffer []byte, es eventsource.EventSource)
 		fmt.Println(err)
 		return
 	}
-	fmt.Println(host, m)
+	//fmt.Println(host, m)
 	es.SendEventMessage(fmt.Sprintf("%f", m.CpuFreq), fmt.Sprintf("%s-%s", host, "cpufreq"), "")
 	es.SendEventMessage(fmt.Sprintf("%f", m.CpuTemp), fmt.Sprintf("%s-%s", host, "cputemp"), "")
 	usage, _ := json.Marshal(m.CoreUsage)
