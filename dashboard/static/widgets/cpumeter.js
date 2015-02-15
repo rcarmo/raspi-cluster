@@ -48,6 +48,7 @@ function cpumeter_widget(el, data) {
                 scaleStepWidth   : 10,
                 scaleStartValue  : 0,
                 scaleShowLabels  : false,
+                showTooltips     : false,
                 animation        : false,
                 bezierCurve      : false,
                 pointDot         : false
