@@ -20,18 +20,19 @@ function linechart_widget(el, data) {
 
     model.on("render", function() {
         requestAnimationFrame(function(){
+            var data = model.history.map(function(x) {return Math.round(x*100.0);});
             model.chart.Line({
-                labels: Array(model.history.length+1).join(1).split('').map(function(){return '';}),
+                labels: Array(data.length+1).join(1).split('').map(function(){return '';}),
                 datasets: [{
-                    data: model.history,
-                    fillColor       : "rgba(220,120,120,0.5)",
-                    strokeColor     : "rgba(220,120,120,1)"
+                    data        : data,
+                    fillColor   : "rgba(220,120,120,0.5)",
+                    strokeColor : "rgba(220,120,120,1)"
                 }]
             },{
                 scaleOverride: true,
                 scaleSteps: 10,
-                scaleStepWidth: (Math.max.apply(Math, model.history) - Math.min.apply(Math, model.history))/10,
-                scaleStartValue: (Math.min.apply(Math, model.history)),
+                scaleStepWidth: (Math.max.apply(Math, data) - Math.min.apply(Math, data))/10,
+                scaleStartValue: (Math.min.apply(Math, data)),
                 scaleShowLabels: true,
                 animation      : false,
                 pointDot       : true 
