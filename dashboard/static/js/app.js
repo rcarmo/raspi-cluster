@@ -8,7 +8,7 @@ function Dashboard(source) {
     self.widgets = [];
     self.widget_margins = [5, 5];
     self.widget_base_dimensions = [220, 240];
-    self.numColumns = 4;
+    self.numColumns = 5;
     self.contentWidth = (self.widget_base_dimensions[0] + self.widget_margins[0] * 2) * self.numColumns;
 
 };
@@ -59,7 +59,6 @@ function Dashboard(source) {
     var positions = JSON.parse(localStorage.getItem('positions'));
     if(positions!=null) {
         $.each(positions, function(i, item) {
-            console.log(item);
             dashboard.trigger("add", $.extend(item, {'source':dashboard.source}));
         });
     }
@@ -73,7 +72,6 @@ function Dashboard(source) {
     });
 
     dashboard.on("add", function(item) {
-        console.log(item);
         if(!(item.kind in templates)) {
             /* Load templates,styles and behavior */
             $('head').append('<link rel="stylesheet" type="text/css" href="widgets/' + item.kind + '.css">');
