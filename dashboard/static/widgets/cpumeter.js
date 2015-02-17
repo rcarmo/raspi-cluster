@@ -18,7 +18,6 @@ function cpumeter_widget(el, data) {
 
     model.on("update", function(ev) {
         var percent = Math.round(JSON.parse(ev.data).percent*100.0,1);
-        console.log(percent);
         model.value = percent;
         model.history.push(model.value);
         if (model.history.length > 20) {
@@ -55,7 +54,6 @@ function cpumeter_widget(el, data) {
                 pointDot         : false
             });
             var meter = $(el).find('.cpumeter');
-            console.log(model.value);
             meter.val(model.value);
             meter.attr("data-bgcolor", meter.css("background-color"))
                 .attr("data-fgcolor", meter.css("color"))
