@@ -9,7 +9,7 @@
             "kind"     : "coremeter",
             "id"       : "master-coreusage",
             "subscribe": "master-cpuusage",
-            "title"    : "master",
+            "title"    : "Master",
             "value"    : [0,0,0,0],
             "info"     : "CPU cores"
         },
@@ -49,7 +49,7 @@
             "kind"     : "cpumeter",
             "id"       : "master-cpuusage",
             "subscribe": "master-cpuusage",
-            "title"    : "master",
+            "title"    : "Master",
             "value"    : 0,
             "info"     : "CPU %"
         },
@@ -89,7 +89,7 @@
             "kind"     : "physmeter",
             "id"       : "master-cpuphys",
             "subscribe": "master-cpuphys",
-            "title"    : "master",
+            "title"    : "Master",
             "value"    : 0,
             "info"     : "Celsius"
         },
@@ -124,6 +124,46 @@
             "title"    : "Node 4",
             "value"    : 0,
             "info"     : "Celsius"
+        },
+        {
+            "kind"     : "memmeter",
+            "id"       : "master-memusage",
+            "subscribe": "master-memusage",
+            "title"    : "Master",
+            "value"    : 0,
+            "info"     : "RAM"
+        },
+        {
+            "kind"     : "memmeter",
+            "id"       : "node1-memusage",
+            "subscribe": "node1-memusage",
+            "title"    : "Node 1",
+            "value"    : 0,
+            "info"     : "RAM"
+        },
+        {
+            "kind"     : "memmeter",
+            "id"       : "node2-memusage",
+            "subscribe": "node2-memusage",
+            "title"    : "Node 2",
+            "value"    : 0,
+            "info"     : "RAM"
+        },
+        {
+            "kind"     : "memmeter",
+            "id"       : "node3-memusage",
+            "subscribe": "node3-memusage",
+            "title"    : "Node 3",
+            "value"    : 0,
+            "info"     : "RAM"
+        },
+        {
+            "kind"     : "memmeter",
+            "id"       : "node4-memusage",
+            "subscribe": "node4-memusage",
+            "title"    : "Node 4",
+            "value"    : 0,
+            "info"     : "RAM"
         },
         {
             "kind"     : "meter",

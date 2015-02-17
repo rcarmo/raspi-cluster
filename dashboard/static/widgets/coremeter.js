@@ -14,7 +14,6 @@ function coremeter_widget(el, data) {
     });
 
     model.on("update", function(ev) {
-        console.log(ev);
         var cores = JSON.parse(ev.data).cores.map(function(x){return Math.round(x*90)});
         model.value = cores;
 	model.core0 = model.value[0];
