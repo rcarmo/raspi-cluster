@@ -3,7 +3,6 @@
 function linechart_model(data) {
     var self = $.observable($.extend(this,data));
 
-    console.log(this);
     return self;
 }
 
