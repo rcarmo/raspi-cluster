@@ -14,8 +14,8 @@ import (
 	"strings"
 	"time"
 	//    "bufio"
-	"os"
 	"encoding/json"
+	"os"
 )
 
 var listenPort int = 8888
@@ -75,11 +75,11 @@ func parseAndSendMetrics(host string, buffer []byte, es eventsource.EventSource)
 		return
 	}
 	//fmt.Println(host, m)
-	es.SendEventMessage(fmt.Sprintf("%f", m.CpuFreq), fmt.Sprintf("%s-%s", host, "cpufreq"), "")
-	es.SendEventMessage(fmt.Sprintf("%f", m.CpuTemp), fmt.Sprintf("%s-%s", host, "cputemp"), "")
+	es.SendEventMessage(fmt.Sprintf("{\"temp\":%f,\"freq\":%f}", m.CpuTemp, m.CpuFreq), fmt.Sprintf("%s-%s", host, "cpuphys"), "")
 	usage, _ := json.Marshal(m.CoreUsage)
-	es.SendEventMessage(string(usage), fmt.Sprintf("%s-%s", host, "coreusage"), "")
-	es.SendEventMessage(fmt.Sprintf("%f", m.CpuUsage), fmt.Sprintf("%s-%s", host, "cpuusage"), "")
+	es.SendEventMessage(fmt.Sprintf("{\"percent\":%f,\"cores\":%s}", m.CpuUsage, usage), fmt.Sprintf("%s-%s", host, "cpuusage"), "")
+	es.SendEventMessage(fmt.Sprintf("{\"total\":%f,\"free\":%f,\"swaptotal\":%f,\"swapfree\":%f}",
+		m.MemInfo.MemTotal, m.MemInfo.MemFree, m.MemInfo.SwapTotal, m.MemInfo.SwapFree), fmt.Sprintf("%s-%s", host, "memusage"), "")
 }
 
 // listens to UDP data and injects events after parsing them
