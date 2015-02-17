@@ -1,32 +1,33 @@
 "use strict";
 
-function coremeter_model(data) {
+function physmeter_model(data) {
     var self = $.observable($.extend(this,data));
     return self;
 }
 
 
-function coremeter_widget(el, data) {
-    var model = new coremeter_model(data);
+function physmeter_widget(el, data) {
+    var model = new physmeter_model(data);
 
     model.on("init", function() {
         model.trigger("render");
     });
 
     model.on("update", function(ev) {
-        console.log(ev);
-        var cores = JSON.parse(ev.data).cores.map(function(x){return Math.round(x*90)});
-        model.value = cores;
-	model.core0 = model.value[0];
-	model.core1 = model.value[1];
-	model.core2 = model.value[2];
-	model.core3 = model.value[3];
+        var data = JSON.parse(ev.data);
+        model.value = data.temp;
+        model.freq = data.freq;
         model.trigger("render");
     });
 
     model.on("render", function() {
         requestAnimationFrame(function(){
             $(el).html($.render(model.template, model));
+            var meter = $(el).find('.meter');
+            meter.val(model.value);
+            meter.attr("data-bgcolor", meter.css("background-color"))
+                .attr("data-fgcolor", meter.css("color"))
+                .knob();
         });
     });
 

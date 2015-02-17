@@ -8,7 +8,7 @@
         {
             "kind"     : "coremeter",
             "id"       : "master-coreusage",
-            "subscribe": "master-coreusage",
+            "subscribe": "master-cpuusage",
             "title"    : "master",
             "value"    : [0,0,0,0],
             "info"     : "CPU cores"
@@ -16,7 +16,7 @@
         {
             "kind"     : "coremeter",
             "id"       : "node1-coreusage",
-            "subscribe": "node1-coreusage",
+            "subscribe": "node1-cpuusage",
             "title"    : "Node 1",
             "value"    : [0,0,0,0],
             "info"     : "CPU cores"
@@ -24,7 +24,7 @@
         {
             "kind"     : "coremeter",
             "id"       : "node2-coreusage",
-            "subscribe": "node2-coreusage",
+            "subscribe": "node2-cpuusage",
             "title"    : "Node 2",
             "value"    : [0,0,0,0],
             "info"     : "CPU cores"
@@ -32,7 +32,7 @@
         {
             "kind"     : "coremeter",
             "id"       : "node3-coreusage",
-            "subscribe": "node3-coreusage",
+            "subscribe": "node3-cpuusage",
             "title"    : "Node 3",
             "value"    : [0,0,0,0],
             "info"     : "CPU Cores"
@@ -40,7 +40,7 @@
         {
             "kind"     : "coremeter",
             "id"       : "node4-coreusage",
-            "subscribe": "node4-coreusage",
+            "subscribe": "node4-cpuusage",
             "title"    : "Node 4",
             "value"    : [0,0,0,0],
             "info"     : "CPU cores"
@@ -86,41 +86,41 @@
             "info"     : "CPU %"
         },
         {
-            "kind"     : "meter",
-            "id"       : "master-cputemp",
-            "subscribe": "master-cputemp",
+            "kind"     : "physmeter",
+            "id"       : "master-cpuphys",
+            "subscribe": "master-cpuphys",
             "title"    : "master",
             "value"    : 0,
             "info"     : "Celsius"
         },
         {
-            "kind"     : "meter",
-            "id"       : "node1-cputemp",
-            "subscribe": "node1-cputemp",
+            "kind"     : "physmeter",
+            "id"       : "node1-cpuphys",
+            "subscribe": "node1-cpuphys",
             "title"    : "Node 1",
             "value"    : 0,
             "info"     : "Celsius"
         },
         {
-            "kind"     : "meter",
-            "id"       : "node2-cputemp",
-            "subscribe": "node2-cputemp",
+            "kind"     : "physmeter",
+            "id"       : "node2-cpuphys",
+            "subscribe": "node2-cpuphys",
             "title"    : "Node 2",
             "value"    : 0,
             "info"     : "Celsius"
         },
         {
-            "kind"     : "meter",
-            "id"       : "node3-cputemp",
-            "subscribe": "node3-cputemp",
+            "kind"     : "physmeter",
+            "id"       : "node3-cpuphys",
+            "subscribe": "node3-cpuphys",
             "title"    : "Node 3",
             "value"    : 0,
             "info"     : "Celsius"
         },
         {
-            "kind"     : "meter",
-            "id"       : "node4-cputemp",
-            "subscribe": "node4-cputemp",
+            "kind"     : "physmeter",
+            "id"       : "node4-cpuphys",
+            "subscribe": "node4-cpuphys",
             "title"    : "Node 4",
             "value"    : 0,
             "info"     : "Celsius"
