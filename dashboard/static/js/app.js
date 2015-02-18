@@ -1,5 +1,11 @@
 "use strict";
 
+
+function reset(){
+     localStorage.positions=null;
+     location.reload(true);
+}
+
 /* Model */
 function Dashboard(source) {
     var self = $.observable(this);
@@ -8,7 +14,7 @@ function Dashboard(source) {
     self.widgets = [];
     self.widget_margins = [5, 5];
     self.widget_base_dimensions = [220, 240];
-    self.numColumns = 5;
+    self.numColumns = 4;
     self.contentWidth = (self.widget_base_dimensions[0] + self.widget_margins[0] * 2) * self.numColumns;
 
 };
