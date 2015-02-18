@@ -14,6 +14,8 @@ function memmeter_widget(el, data) {
         model.used = [];
         model.free = [];
         $(el).html($.render(model.template, model));
+        model.ctx = $(el).find('.chart')[0].getContext("2d");
+        model.chart = new Chart(model.ctx);
         model.trigger("render");
     });
 
@@ -32,9 +34,6 @@ function memmeter_widget(el, data) {
 
     model.on("render", function() {
         requestAnimationFrame(function(){
-            $(el).html($.render(model.template, model));
-            model.ctx = $(el).find('.chart')[0].getContext("2d");
-            model.chart = new Chart(model.ctx);
             model.chart.Line({
                 labels: Array(model.free.length+1).join(1).split('').map(function(){return '';}),
                 datasets: [{
