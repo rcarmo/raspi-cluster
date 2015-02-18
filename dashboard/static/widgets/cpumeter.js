@@ -13,6 +13,8 @@ function cpumeter_widget(el, data) {
         model.trigger("render");
         model.history = [];
         $(el).html($.render(model.template, model));
+        model.ctx = $(el).find('.chart')[0].getContext("2d");
+        model.chart = new Chart(model.ctx);
         model.trigger("render");
     });
 
@@ -28,9 +30,6 @@ function cpumeter_widget(el, data) {
 
     model.on("render", function() {
         requestAnimationFrame(function(){
-            $(el).html($.render(model.template, model));
-            model.ctx = $(el).find('.chart')[0].getContext("2d");
-            model.chart = new Chart(model.ctx);
             model.chart.Line({
                 labels: Array(model.history.length+1).join(1).split('').map(function(){return '';}),
                 datasets: [{
