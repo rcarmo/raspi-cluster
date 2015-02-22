@@ -13,6 +13,7 @@ function memmeter_widget(el, data) {
         model.trigger("render");
         model.used = [];
         model.free = [];
+        model.swap = [];
         $(el).html($.render(model.template, model));
         model.ctx = $(el).find('.chart')[0].getContext("2d");
         model.chart = new Chart(model.ctx);
@@ -25,9 +26,11 @@ function memmeter_widget(el, data) {
         model.total = data.total; 
         model.used.push(data.total - data.free);
         model.free.push(data.free);
+        model.swap.push(data.swapfree-data.swaptotal);
         if (model.used.length > 20) {
             model.free.shift();
             model.used.shift();
+            model.swap.shift();
         }
         model.trigger("render");
     });
@@ -40,14 +43,18 @@ function memmeter_widget(el, data) {
                     data        : model.free,
                     fillColor   : "rgba(66,92,120,0.5)",
                     strokeColor : "rgba(66,92,120,1)"
+                },{
+                    data        : model.swap,
+                    fillColor   : "rgba(120,92,66,0.5)",
+                    strokeColor : "rgba(120,92,66,1)"
                 }]
             },{
-                showScale        : false,
+                showScale        : true,
                 scaleOverride    : true,
                 scaleSteps       : 10,
                 scaleIntegersOnly: true,
-                scaleStepWidth   : model.total/10,
-                scaleStartValue  : 0,
+                scaleStepWidth   : 1024*1024/10*2,
+                scaleStartValue  : -1024*1024,
                 scaleShowLabels  : false,
                 showTooltips     : false,
                 animation        : false,
