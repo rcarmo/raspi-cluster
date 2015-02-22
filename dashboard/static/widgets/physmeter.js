@@ -15,7 +15,7 @@ function physmeter_widget(el, data) {
 
     model.on("update", function(ev) {
         var data = JSON.parse(ev.data);
-        model.value = data.temp;
+        model.value = Math.round(data.temp,0);
         model.freq = data.freq;
         model.trigger("render");
     });
