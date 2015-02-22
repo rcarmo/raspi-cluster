@@ -10,6 +10,11 @@ function physmeter_widget(el, data) {
     var model = new physmeter_model(data);
 
     model.on("init", function() {
+        $(el).html($.render(model.template, model));
+        model.ctx=$(el).find('.meter')[0].getContext("2d");
+        model.vtext=$(el).find('p.value')[0];
+        model.ftext=$(el).find('p.freq')[0];
+        model.meter = new Chart(model.ctx);
         model.trigger("render");
     });
 
@@ -22,12 +27,23 @@ function physmeter_widget(el, data) {
 
     model.on("render", function() {
         requestAnimationFrame(function(){
-            $(el).html($.render(model.template, model));
-            var meter = $(el).find('.meter');
-            meter.val(model.value);
-            meter.attr("data-bgcolor", meter.css("background-color"))
-                .attr("data-fgcolor", meter.css("color"))
-                .knob();
+            model.meter.Doughnut([{
+                value: model.value,
+                color: "rgba(255,255,255,0.9)",
+            },{
+                value: 100-model.value,
+                color: "rgba(66,92,120,0.2)",
+            },{
+                value: 45,
+                color: "rgba(255,255,255,0)",
+            }],{
+                percentageInnerCutout : 70,
+                animation             : false,
+                segmentShowStroke     : false,
+                showTooltips          : false,
+            });
+            $(model.vtext).html(model.value + "&deg;C");
+            $(model.ftext).html(model.freq + " MHz");
         });
     });
 
