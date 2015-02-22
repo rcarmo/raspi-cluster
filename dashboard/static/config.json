@@ -131,7 +131,7 @@
             "subscribe": "master-memusage",
             "title"    : "Master",
             "value"    : 0,
-            "info"     : "RAM"
+            "info"     : "RAM+swap"
         },
         {
             "kind"     : "memmeter",
@@ -139,7 +139,7 @@
             "subscribe": "node1-memusage",
             "title"    : "Node 1",
             "value"    : 0,
-            "info"     : "RAM"
+            "info"     : "RAM+swap"
         },
         {
             "kind"     : "memmeter",
@@ -147,7 +147,7 @@
             "subscribe": "node2-memusage",
             "title"    : "Node 2",
             "value"    : 0,
-            "info"     : "RAM"
+            "info"     : "RAM+swap"
         },
         {
             "kind"     : "memmeter",
@@ -155,7 +155,7 @@
             "subscribe": "node3-memusage",
             "title"    : "Node 3",
             "value"    : 0,
-            "info"     : "RAM"
+            "info"     : "RAM+swap"
         },
         {
             "kind"     : "memmeter",
@@ -163,7 +163,7 @@
             "subscribe": "node4-memusage",
             "title"    : "Node 4",
             "value"    : 0,
-            "info"     : "RAM"
+            "info"     : "RAM+swap"
         }
     ]
 }
