@@ -18,10 +18,27 @@
 .widget-cpumeter .updated-at {
   color: rgba(0, 0, 0, 0.3);
 }
-.widget-cpumeter .grouper canvas {
-  opacity: 0.75;
+.widget-cpumeter p.value {
+  position: absolute;
+  top: 48%;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  font-size: 35px;
+  font-weight: bold;
+  z-index: 10;
 }
-.widget-cpumeter .chartholder .chart {
+.widget-cpumeter .meter {
+  position: absolute;
+  left: 35px !important;
+  top: 65px;
+  width: 150px;
+  height: 150px;
+  z-index: -10;
+  transform: rotate(-122deg);
+}
+.widget-cpumeter .chart {
+  opacity: 0.75;
   position: absolute;
   left: 15px;
   width: 190px;

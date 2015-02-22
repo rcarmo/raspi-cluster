@@ -64,6 +64,7 @@ func reverseLookup(ip string) string {
 		hostname = strings.Split(result[0], ".")[0]
 		hostCache[ip] = hostname
 	}
+	//fmt.Println(ip, hostname)
 	return hostname
 }
 
