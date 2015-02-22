@@ -80,10 +80,13 @@ function Dashboard(source) {
     dashboard.on("add", function(item) {
         if(!(item.kind in templates)) {
             /* Load templates,styles and behavior */
-            $('head').append('<link rel="stylesheet" type="text/css" href="widgets/' + item.kind + '.css">');
-            $.get('widgets/' + item.kind + '.html', function(data) {
+            $.ajax('widgets/' + item.kind + '.html')
+            .done(function(data) {
                 templates[item.kind] = data;
-                $.getScript('widgets/' + item.kind + '.js', function() {
+                if(!($("#css-" + item.kind).length)) {
+                    $('head').append('<link id="css-' + item.kind + '" rel="stylesheet" type="text/css" href="widgets/' + item.kind + '.css">');
+                }
+                $.getScript('widgets/' + item.kind + '.js',function(){
                     dashboard.trigger("loaded", item);
                 })
             })

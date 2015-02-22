@@ -51,7 +51,7 @@
             "subscribe": "master-cpuusage",
             "title"    : "Master",
             "value"    : 0,
-            "info"     : "CPU %"
+            "info"     : "CPU"
         },
         {
             "kind"     : "cpumeter",
@@ -59,7 +59,7 @@
             "subscribe": "node1-cpuusage",
             "title"    : "Node 1",
             "value"    : 0,
-            "info"     : "CPU %"
+            "info"     : "CPU"
         },
         {
             "kind"     : "cpumeter",
@@ -67,7 +67,7 @@
             "subscribe": "node2-cpuusage",
             "title"    : "Node 2",
             "value"    : 0,
-            "info"     : "CPU %"
+            "info"     : "CPU"
         },
         {
             "kind"     : "cpumeter",
@@ -75,7 +75,7 @@
             "subscribe": "node3-cpuusage",
             "title"    : "Node 3",
             "value"    : 0,
-            "info"     : "CPU %"
+            "info"     : "CPU"
         },
         {
             "kind"     : "cpumeter",
@@ -83,7 +83,7 @@
             "subscribe": "node4-cpuusage",
             "title"    : "Node 4",
             "value"    : 0,
-            "info"     : "CPU %"
+            "info"     : "CPU"
         },
         {
             "kind"     : "physmeter",
@@ -164,14 +164,6 @@
             "title"    : "Node 4",
             "value"    : 0,
             "info"     : "RAM"
-        },
-        {
-            "kind"     : "meter",
-            "id"       : "consumer-count",
-            "subscribe": "consumer-count",
-            "title"    : "Viewers",
-            "value"    : 0,
-            "info"     : "Browsers"
         }
     ]
 }

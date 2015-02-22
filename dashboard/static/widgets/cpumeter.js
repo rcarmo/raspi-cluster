@@ -13,8 +13,9 @@ function cpumeter_widget(el, data) {
         model.trigger("render");
         model.history = [];
         $(el).html($.render(model.template, model));
-        model.ctx = $(el).find('.chart')[0].getContext("2d");
-        model.chart = new Chart(model.ctx);
+        model.vtext=$(el).find('p.value')[0];
+        model.chart = new Chart($(el).find('.chart')[0].getContext("2d"));
+        model.meter = new Chart($(el).find('.meter')[0].getContext("2d"));
         model.trigger("render");
     });
 
@@ -52,11 +53,22 @@ function cpumeter_widget(el, data) {
                 bezierCurve      : false,
                 pointDot         : false
             });
-            var meter = $(el).find('.cpumeter');
-            meter.val(model.value);
-            meter.attr("data-bgcolor", meter.css("background-color"))
-                .attr("data-fgcolor", meter.css("color"))
-                .knob();
+            model.meter.Doughnut([{
+                value: model.value,
+                color: "rgba(255,255,255,0.9)",
+            },{
+                value: 100-model.value,
+                color: "rgba(66,92,120,0.5)",
+            },{
+                value: 45,
+                color: "rgba(255,255,255,0)",
+            }],{
+                percentageInnerCutout: 70,
+                animation            : false,
+                segmentShowStroke    : false,
+                showTooltips         : false,
+            });
+            $(model.vtext).html(model.value + "%");
         });
     });
 
