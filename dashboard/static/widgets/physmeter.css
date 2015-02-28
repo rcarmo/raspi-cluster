@@ -39,7 +39,6 @@
   width: 150px;
   height: 150px;
   z-index: -10;
-  transform: rotate(-122deg);   
 }
 .widget-physmeter .chart {
   opacity: 0.75;

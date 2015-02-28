@@ -16,6 +16,10 @@ function cpumeter_widget(el, data) {
         model.vtext=$(el).find('p.value')[0];
         model.chart = new Chart($(el).find('.chart')[0].getContext("2d"));
         model.meter = new Chart($(el).find('.meter')[0].getContext("2d"));
+        // sneakily rotate canvas coordinates
+        model.meter.ctx.translate(75,75);
+        model.meter.ctx.rotate(-124*Math.PI/180);
+        model.meter.ctx.translate(-75,-75);
         model.trigger("render");
     });
 
