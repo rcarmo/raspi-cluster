@@ -50,6 +50,8 @@ It's a bit ironic to do some kinds of processing on merely 5GB of aggregated RAM
 
 ### List of packages involved so far:
 
+* [Docker][do], which ships with Ubuntu 14.04 and makes it a lot easier to build and tear down environments
+* [OpenVSwitch][ovs], which I'm using for playing around with network topologies
 * [Jupyter][jy], which provides me with a nice web front-end and basic Python parallel computing.
 * [Spark][spark], which has mostly replaced [Disco][dp] for map/reduce jobs.
 * [Dash](https://github.com/rcarmo/dash), a real-time status dashboard (rewritten in [Go][golang], available under the `dashboard` folder here, and still being worked on)
@@ -63,7 +65,7 @@ It's a bit ironic to do some kinds of processing on merely 5GB of aggregated RAM
 
 Here's what the cluster dashboard looks like:
 
-![First pass at a dashboard](https://raw.github.com/rcarmo/raspi-cluster/master/pics/dash.jpg)
+![Updated dashboard](https://raw.github.com/rcarmo/raspi-cluster/master/pics/dash.jpg)
 
 ## But isn't the [Raspberry Pi][rpi] slow?
 
@@ -89,3 +91,6 @@ But I'm open to [sponsoring][d] so that I can upgrade this to have at least twic
 [golang]: http://www.golang.org
 [spark]: http://spark.apache.org
 [jy]: http://jupyter.org
+[ub]: https://wiki.ubuntu.com/ARM/RaspberryPi
+[do]: http://docker.io
+[ovs]: http://openvswitch.org/
