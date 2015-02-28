@@ -15,6 +15,10 @@ function physmeter_widget(el, data) {
         model.vtext=$(el).find('p.value')[0];
         model.ftext=$(el).find('p.freq')[0];
         model.meter = new Chart(model.ctx);
+        // sneakily rotate canvas coordinates
+        model.meter.ctx.translate(75,75);
+        model.meter.ctx.rotate(-124*Math.PI/180);
+        model.meter.ctx.translate(-75,-75);
         model.trigger("render");
     });
 
