@@ -1,0 +1,3 @@
+# This is only necessary if you have trouble with DNS settings in Ubuntu
+# It is appended to resolv.conf automatically
+nameserver 10.0.0.1
