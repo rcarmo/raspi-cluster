@@ -52,8 +52,8 @@ It's a bit ironic to do some kinds of processing on merely 5GB of aggregated RAM
 
 ### List of packages involved so far:
 
-* [etcd][etc], which I'm now using to store (and distribute) configurations across nodes
-* [Docker][do], which ships with Ubuntu 14.04 and makes it a lot easier to build and tear down environments
+* [etcd][etcd], which I'm now using to store (and distribute) configurations across nodes
+* [Docker][do], which ships with Ubuntu 14.04 and makes it a lot easier to build and tear down environments. Currently trying to get 1.7 to build so I can use `swarm` and other niceties.
 * [OpenVSwitch][ovs], which I'm using for playing around with network topologies
 * [Jupyter][jy], which provides me with a nice web front-end and basic Python parallel computing.
 * [Spark][spark], which has mostly replaced [Disco][dp] for map/reduce jobs.
