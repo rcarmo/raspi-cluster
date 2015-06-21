@@ -1,0 +1,17 @@
+# Set the peer listening address
+# export ETCD_PEER_ADDR=127.0.0.1:7001
+
+# Set other command line options like the name and discovery url
+# from https://discovery.etcd.io/new
+# export ETCD_OPTS="-name=name_here -discovery=https://discovery.etcd.io/token_here"
+
+# Configure our initial etcd master to use SRV records for discovery and listen in localhost (so etcdctl can talk to it easily)
+export ETCD_OPTS="--data-dir /var/run/default.etcd \
+-name master \
+-discovery-srv cluster \
+-initial-advertise-peer-urls http://master:2380 \
+-initial-cluster-token etcd-cluster \
+-initial-cluster-state new \
+-advertise-client-urls http://master:2379 \
+-listen-client-urls http://master:2379,http://127.0.0.1:2379 \
+-listen-peer-urls http://master:2380"
