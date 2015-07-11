@@ -2,4 +2,5 @@
 *.js linguist-vendored
 *.css linguist-vendored
 *.html linguist-vendored
+dashboard/vendor/* linguist-vendored
 *.scad linguist-documentation
