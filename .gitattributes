@@ -2,3 +2,4 @@
 *.js linguist-vendored
 *.css linguist-vendored
 *.html linguist-vendored
+*.scad linguist-documentation
