@@ -1,0 +1,9 @@
+- hosts: all
+  sudo: true
+  tasks:
+   - name: updates a server
+     apt: update_cache=yes
+   - name: upgrade a server
+     shell: apt-get dist-upgrade -y
+   - name: cleanup
+     shell: apt-get autoremove -y
