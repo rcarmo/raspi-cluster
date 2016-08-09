@@ -1,0 +1,11 @@
+- hosts: all
+  sudo: true
+  tasks:
+   - name: install webupd8 PPA
+     shell:  sudo add-apt-repository -y ppa:webupd8team/java
+   - name: update cache
+     apt: update_cache=yes
+   - name: licensing
+     shell: echo "oracle-java8-installer shared/accepted-oracle-license-v1-1 select true" | debconf-set-selections
+   - name: install Java 8
+     shell: apt-get install -y oracle-java8-installer
