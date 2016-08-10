@@ -89,7 +89,7 @@ But I'm open to [sponsoring][d] so that I can upgrade this to have at least twic
 [u3]: http://hardkernel.com/main/products/prdt_info.php?g_code=G138733896281
 [clj]: http://www.clojure.org
 [hz]: http://www.hazlecast.org
-[nc]: http://nightcode.info
+[nc]: https://github.com/oakes/Nightcode
 [lt]: http://lighttable.com
 [moebius]: http://moebiuslinux.sourceforge.net
 [lein]: http://leiningen.org
