@@ -22,7 +22,7 @@
 
 #define ANNOUNCEMENT_GROUP "224.0.0.251"
 #define ANNOUNCEMENT_PORT 6000
-#define ANNOUNCEMENT_TEMPLATE "{\"cpufreq\":%d,\"cputemp\":%f,\"cpuusage\":%f,\"coreusage\":[%s],\"loadavg\":%s,\"meminfo\":{%s}}"
+#define ANNOUNCEMENT_TEMPLATE "{\"hostname\":\"%s\",\"cpufreq\":%d,\"cputemp\":%f,\"cpuusage\":%f,\"coreusage\":[%s],\"loadavg\":%s,\"meminfo\":{%s}}"
 #define MAX_LENGTH 1024
 #define MAX_CORES 4
 #define CPU_STAT_COUNT 7 /* user, nice, system, idle, iowait, irq, softirq */
@@ -192,9 +192,12 @@ char *get_meminfo(void) {
 int main() {
     struct sockaddr_in addr;
     int    i, msg_len, addr_len, sock, count;
-    char   msg[MAX_LENGTH], usage[MAX_LENGTH], scratch[MAX_LENGTH];
+    char   msg[MAX_LENGTH], usage[MAX_LENGTH], scratch[MAX_LENGTH], hostname[MAX_LENGTH];
 
     //mtrace();
+
+    bzero((char *)&hostname, MAX_LENGTH);
+    gethostname(hostname, MAX_LENGTH);
 
     /* set up socket */
     char *opt;
@@ -222,7 +225,7 @@ int main() {
         if(i) {
             usage[i-1] = '\0'; /* strip comma */
         }
-        msg_len = sprintf(msg, ANNOUNCEMENT_TEMPLATE, get_cpufreq(), get_cputemp(), core_usage[0], usage, get_loadavg(), get_meminfo());
+        msg_len = sprintf(msg, ANNOUNCEMENT_TEMPLATE, hostname, get_cpufreq(), get_cputemp(), core_usage[0], usage, get_loadavg(), get_meminfo());
         // note that we're not sending msg_len + 1 data to avoid sending the \0.
         count = sendto(sock, msg, msg_len, 0, (struct sockaddr *) &addr, addr_len);
         if (count < 0) {
