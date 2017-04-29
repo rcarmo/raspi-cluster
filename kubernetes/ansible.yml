@@ -1,0 +1,15 @@
+- hosts: all
+  sudo: true
+  tasks:
+   - name: get repo key
+     apt_key:
+       url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+       state: present
+   - name: add sources.list
+     apt_repository:
+       repo: deb http://apt.kubernetes.io/ kubernetes-xenial main
+       state: present
+   - name: update apt cache
+     apt: update_cache=yes
+   - name: install kubeadm
+     shell: apt-get install -y kubeadm
