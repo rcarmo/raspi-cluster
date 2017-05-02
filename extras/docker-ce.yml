@@ -1,0 +1,31 @@
+- hosts: all
+  sudo: true
+  tasks:
+   - name: remove old Docker
+     apt: name=docker.io state=absent
+   - name: update cache
+     apt: update_cache=yes
+   - name: install base packages
+     apt: name={{ item }} state=latest 
+     with_items:
+       - apt-transport-https
+       - ca-certificates
+       - curl
+       - software-properties-common
+
+   - name: install apt key
+     shell: curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
+
+   - name: add repository
+     shell: add-apt-repository "deb [arch=armhf] https://download.docker.com/linux/ubuntu xenial stable"
+
+   - name: update cache
+     apt: update_cache=yes
+
+   - name: install base packages
+     apt: name={{ item }} state=latest 
+     with_items:
+       - docker-ce
+
+   - name: add user to group
+     shell: usermod -a -G docker ubuntu
