@@ -1,0 +1,14 @@
+- hosts: all
+  sudo: true
+  tasks:
+   - name: download Spark
+     shell: cd /tmp; wget https://d3kbcqa49mib13.cloudfront.net/spark-2.1.1-bin-without-hadoop.tgz 
+   - name: remove old version
+     shell: cd /opt; rm -rf spark*
+   - name: unpack
+     shell: cd /opt; tar -zxvf /tmp/spark*.tgz; rm -f /tmp/spark*
+   - name: link
+     shell: cd /opt; ln -s spark-2.1.1-bin-without-hadoop spark
+   - name: permissions
+     shell: chown -R ubuntu:ubuntu /opt/spark*; mkdir /opt/spark/logs; chown jobs:jobs /opt/spark/logs
+
