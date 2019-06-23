@@ -17,7 +17,7 @@ upgrade:
 # 1st time setup
 setup:
 	make upgrade
-	$(foreach NODE, $(ALL), \
+	$(foreach NODE, $(NODES), \
 		make add-$(NODE);)
 
 # Add a node
