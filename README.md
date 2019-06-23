@@ -1,4 +1,4 @@
-# raspi-cluster
+# raspi-cluster (now with Kubernetes thanks to k3s!)
 
 ![Pi 2](https://raw.github.com/rcarmo/raspi-cluster/master/pics/pi2.jpg)
 
@@ -36,21 +36,22 @@ This is a partial list of the stuff I'm using (Amazon UK affiliate links):
 * [5x 6 inch micro USB cables](http://www.amazon.co.uk/gp/product/B003YKX6WM/ref=as_li_tf_tl?ie=UTF8&tag=thtaofma-21&linkCode=as2&camp=1634&creative=6738)
 * [1x 5 port USB PSU](http://www.amazon.co.uk/gp/product/B00EKDVGKQ/ref=as_li_tf_tl?ie=UTF8&tag=thtaofma-21&linkCode=as2&camp=1634&creative=6738)
 * 1x ancient Bondi Blue iMac USB keyboard.
-* 1x Custom-printed rack case (see SCAD files)
+* 1x Custom-printed rack case (see SCAD files in the `3d_models` folder)
 
 ## Software
 
-As a base OS, I'm currently using [the Ubuntu 16.04 official image for the Pi 2][ub], which works much better than Raspbian for my purposes (nevertheless, the configuration files in this repo should work in both systems)
+As a base OS, this cluster spent most of its useful life using [the Ubuntu 16.04 official image for the Pi 2][ub], which worked much better than Raspbian for running Swarm, Docker or Spark (nevertheless, the configuration files in this repo should work in both systems).
 
-The cluster is now running a mix of Docker Swarm and the occasional [Clojure][clj] program using [Hazelcast][hz] atop JDK 1.8, as well as [Jupyter][jy], which runs very nicely indeed and provides me with an agnostic, notebook-oriented front-end.
+Up to the point where I had unfettered access to public cloud resources as part of my work, the cluster ran a mix of Docker Swarm and the occasional [Clojure][clj] program using [Hazelcast][hz] atop JDK 1.8, as well as [Jupyter][jy], which runs very nicely indeed and provided me with an agnostic, notebook-oriented front-end.
 
-I have also set up [Disco][dp] (and now [Spark][spark]) on it and intend to fiddle with MPI, but so far I have plenty of ways to parallelize things.
+Earlier (back in the Rev 1 days) I had set up [Disco][dp] on it and intended to fiddle with MPI, but now I have plenty more ways to parallelize things.
 
-It's a bit ironic to do some kinds of processing on merely 5GB of aggregated RAM, but I'm interested in the algorithms themselves and don't plan on doing something silly like tackling the next Netflix Prize with this -- besides, running things on low-end hardware is often the only way to do proper optimization.
+It's a bit ironic to do some kinds of processing on merely 5GB of aggregated RAM, but my interest was in the algorithms themselves and I never planned on doing something silly like tackling the next Netflix Prize with this -- besides, running things on low-end hardware is often the only way to do proper optimization, and I like the extra challenges.
 
 ### List of packages involved so far:
 
-* [etcd][etcd], which I'm now using to store (and distribute) configurations across nodes
+* [k3s][k3s], which is the latest addition and has rendered pretty much everything else below obsolete. See the `k3s` folder for a simple `Makefile` to install it and keep it running.
+* [etcd][etcd], which I was using to store (and distribute) configurations across nodes
 * [Docker][do], which ships with Ubuntu 14.04 and makes it a lot easier to build and tear down environments. Currently trying to get 1.7 to build so I can use `swarm` and other niceties.
 * [OpenVSwitch][ovs], which I'm using for playing around with network topologies
 * [Jupyter][jy], which provides me with a nice web front-end and basic Python parallel computing.
@@ -64,7 +65,7 @@ It's a bit ironic to do some kinds of processing on merely 5GB of aggregated RAM
 * `distcc` for building binaries slightly faster
 * `dnsmasq` for DHCP and DNS service
 
-Here's what the cluster dashboard looks like:
+This repository also ships with a very simple monitoring dashboard that looks like this:
 
 ![Updated dashboard](https://raw.github.com/rcarmo/raspi-cluster/master/pics/dash.jpg)
 
@@ -74,7 +75,7 @@ Well spotted, young person. It was, and the Pi 2, despite being a marked improve
 
 Nevertheless, the current configuration provides me with 20 ARMv7 cores clocked at 1GHz, and that's nothing to sneeze at.
 
-But I'm open to [sponsoring][d] so that I can upgrade this to have at least twice as many boards...
+But I'm open to [sponsoring][d] so that I can upgrade this to have at least twice as many boards, or move to a set of beefier ARM64 boards. The [NVIDIA Jetson](https://developer.nvidia.com/buy-jetson), in particular, would be great, but five of them aren't easy to come by.
 
 [etcd]: https://github.com/coreos/etcd
 [hz]: http://www.hazelcast.org
@@ -96,3 +97,4 @@ But I'm open to [sponsoring][d] so that I can upgrade this to have at least twic
 [ub]: https://wiki.ubuntu.com/ARM/RaspberryPi
 [do]: http://docker.io
 [ovs]: http://openvswitch.org/
+[k3s]: http://k3s.io

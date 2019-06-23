@@ -1,3 +1,5 @@
+# Older (Deprecated) Notes on setting up K8s
+
 Be sure to add the following entries to /boot/cmdline.txt:
 
 ```console
