@@ -1,4 +1,3 @@
-[![Stories in Ready](https://badge.waffle.io/rcarmo/raspi-cluster.png?label=ready&title=Ready)](https://waffle.io/rcarmo/raspi-cluster)
 # raspi-cluster
 
 ![Pi 2](https://raw.github.com/rcarmo/raspi-cluster/master/pics/pi2.jpg)
