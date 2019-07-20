@@ -1,16 +1,24 @@
 [plugins.opt]
 path = "{{ .NodeConfig.Containerd.Opt }}"
-
 [plugins.cri]
 stream_server_address = "{{ .NodeConfig.AgentConfig.NodeName }}"
 stream_server_port = "10010"
+{{- if .IsRunningInUserNS }}
+disable_cgroup = true
+disable_apparmor = true
+restrict_oom_score_adj = true
+{{ end -}}
+{{- if .NodeConfig.AgentConfig.PauseImage }}
+sandbox_image = "{{ .NodeConfig.AgentConfig.PauseImage }}"
+{{ end -}}
+{{- if not .NodeConfig.NoFlannel }}
   [plugins.cri.cni]
     bin_dir = "{{ .NodeConfig.AgentConfig.CNIBinDir }}"
     conf_dir = "{{ .NodeConfig.AgentConfig.CNIConfDir }}"
+{{ end -}}
 
 [plugins.cri.registry.mirrors]
   [plugins.cri.registry.mirrors."docker.io"]
     endpoint = ["https://registry-1.docker.io"]
   [plugins.cri.registry.mirrors."registry.lan:5000"]
     endpoint = ["http://registry.lan:5000"]
-
