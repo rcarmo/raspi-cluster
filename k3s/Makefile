@@ -10,7 +10,7 @@ debug:
 
 # Upgrade or install
 upgrade:
-	$(foreach NODE, $(ALL), \
+	$(foreach NODE, master, \
 		echo "curl -sfL https://get.k3s.io | sh -" | ssh $(NODE) ;)
 	sudo chmod a+r /etc/rancher/k3s/k3s.yaml
 
@@ -26,7 +26,7 @@ add-%:
 
 # Patch our TOML file for insecure registry
 deploy-toml:
-	$(foreach NODE, $(NODES), cat config.toml.tmpl | ssh $(NODE) sudo tee /var/lib/rancher/k3s/agent/etc/containerd/config.toml.tmpl;) 
+	$(foreach NODE, $(ALL), cat config.toml.tmpl | ssh $(NODE) sudo tee /var/lib/rancher/k3s/agent/etc/containerd/config.toml.tmpl;) 
 
 
 reboot-nodes:
@@ -35,3 +35,8 @@ reboot-nodes:
 
 reboot-all:
 	-$(foreach NODE, $(ALL), ssh $(NODE) sudo reboot;)
+
+uninstall:
+	-$(foreach NODE, $(ALL), ssh $(NODE) sudo rm -rf /etc/containerd;)
+	-$(foreach NODE, $(ALL), ssh $(NODE) sudo /usr/local/bin/k3s-uninstall.sh;)
+	-$(foreach NODE, $(ALL), ssh $(NODE) sudo /usr/local/bin/k3s-agent-uninstall.sh;)
