@@ -4,9 +4,9 @@ NODE_TOKEN:=$(shell sudo cat /var/lib/rancher/k3s/server/node-token)
 NODES=node1 node2 node3 node4
 # Tack on the master at the end
 ALL=$(NODES) master 
-K3S_VERSION=v1.17.0+k3s.1
+K3S_VERSION=v1.17.3+k3s1
 
-# need cgroup_enable=cpuset cgroup_enable=memory cgroup_memory=1 in bootcmd
+# need cgroup_cpuset=1 cgroup_memory=1 cgroup_enable="memory" swapaccount=1 in cmdline.txt
 
 debug:
 	echo ${NODE_TOKEN}
